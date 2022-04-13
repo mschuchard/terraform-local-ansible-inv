@@ -1,0 +1,5 @@
+- check full gamut of ansible supported inv stuff for passing from tf
+- creds passing
+- easily parse inputs as if exported attrs?
+- travis/circle/gh
+- doc
