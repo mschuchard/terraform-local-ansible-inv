@@ -11,7 +11,7 @@ resource "local_file" "ansible_inventory" {
   )
 
   # prefix inventory with name of first instance for now
-  filename        = "${path.root}/inventory.${each.value}"
+  filename        = "${path.root}/${var.prefix}inventory.${each.value}"
   file_permission = "0644"
 }
 
@@ -20,9 +20,8 @@ locals {
   instances_transform = {
     "all" = {
       "hosts" = {
-        for instance in var.instances : instance.name => {
-          "ansible_host" = instance.ip
-        }
+        for instance in var.instances : instance.name =>
+        merge({ "ansible_host" = instance.ip }, instance.vars)
       }
     }
   }

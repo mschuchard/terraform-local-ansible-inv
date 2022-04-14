@@ -13,7 +13,14 @@ variable "instances" {
   type = set(object({
     name = string
     ip   = string
+    vars = map(string)
   }))
   default     = []
   description = "The instances and their attributes to populate the Ansible inventory file."
+}
+
+variable "prefix" {
+  type        = string
+  default     = ""
+  description = "A prefix to prepend to the name of the output inventory files. For example: the INI inventory will be named <prefix>inventory.ini."
 }

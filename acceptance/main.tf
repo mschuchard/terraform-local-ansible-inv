@@ -7,6 +7,12 @@ module "ansible_inv" {
     {
       name = "localhost"
       ip   = "127.0.0.1"
+      vars = { "ansible_connection" = "local" }
+    },
+    {
+      name = "also_localhost"
+      ip   = "127.0.0.1"
+      vars = { "ansible_connection" = "local", "foo" = "bar" }
     }
   ]
 }
@@ -14,6 +20,8 @@ module "ansible_inv" {
 # validate generated inventory files with ad hoc ansible
 resource "null_resource" "inventory_validation" {
   for_each = local.formats
+
+  triggers = { inventory = module.ansible_inv.yaml }
 
   provisioner "local-exec" {
     command = "ansible all -i inventory.${each.value} -m ping"

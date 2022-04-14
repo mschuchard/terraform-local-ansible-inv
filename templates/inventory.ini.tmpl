@@ -1,3 +1,3 @@
 %{ for instance in instances_ini ~}
-${instance.ip} # ${instance.name}
+${instance.ip} %{ for var_key, var_value in instance.vars }${var_key}=${var_value} %{ endfor }ansible_host=${instance.name}
 %{ endfor ~}
