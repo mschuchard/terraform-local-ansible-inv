@@ -24,7 +24,7 @@ python: 3.9
 
 # execute tests
 install:
-- sudo wget "https://releases.hashicorp.com/terraform/${VERSION}/terraform_${TF_VERSION}_linux_amd64.zip"
+- sudo wget "https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip"
 - sudo unzip "terraform_${TF_VERSION}_linux_amd64.zip" -d /usr/bin/
 
 before_script:

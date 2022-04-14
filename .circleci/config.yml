@@ -8,6 +8,7 @@ defaults: &defaults
   environment:
     TF_IN_AUTOMATION: true
     TF_VERSION: '1.1.7'
+  resource_class: medium
 
 default_tf_pre_steps: &default_tf_pre_steps
   pre-steps:
@@ -23,8 +24,11 @@ jobs:
         keys:
         - "v1-{{ .Environment.CIRCLE_PROJECT_REPONAME }}-{{ checksum \"provider.tf\" }}"
     - run:
+        name: install curl
+        command: apk add --no-cache --update curl
+    - run:
         name: install terraform
-        command: curl -o terraform.zip "https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip" && unzip terraform.zip -d /usr/bin/
+        command: curl -o terraform.zip "https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip" && unzip terraform.zip -d /bin/
     - run:
         name: initialize terraform module
         command: terraform init -backend=false -no-color
