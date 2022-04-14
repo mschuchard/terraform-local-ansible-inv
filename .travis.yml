@@ -26,11 +26,11 @@ python: 3.9
 install:
 - sudo wget "https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip"
 - sudo unzip "terraform_${TF_VERSION}_linux_amd64.zip" -d /usr/bin/
+- pip install ansible
 
 before_script:
 - terraform init -backend=false -no-color
-- cd acceptance && terraform init -no-color
-- pip install ansible
+- cd acceptance && terraform init -no-color && cd ..
 
 script:
 - terraform validate -no-color
