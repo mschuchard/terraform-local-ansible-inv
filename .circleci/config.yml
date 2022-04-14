@@ -1,0 +1,80 @@
+---
+version: 2.1
+
+defaults: &defaults
+  working_directory: /tmp/project
+  docker:
+  - image: cytopia/ansible:latest
+  environment:
+    TF_IN_AUTOMATION: true
+    TF_VERSION: '1.1.7'
+
+default_tf_pre_steps: &default_tf_pre_steps
+  pre-steps:
+  - attach_workspace:
+      at: /tmp/project
+
+jobs:
+  prepare:
+    <<: *defaults
+    steps:
+    - checkout
+    - restore_cache:
+        keys:
+        - "v1-{{ .Environment.CIRCLE_PROJECT_REPONAME }}-{{ checksum \"provider.tf\" }}"
+    - run:
+        name: install terraform
+        command: curl -o terraform.zip "https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip" && unzip terraform.zip -d /usr/bin/
+    - run:
+        name: initialize terraform module
+        command: terraform init -backend=false -no-color
+    - run:
+        name: initialize acceptance test
+        command: cd acceptance && terraform init -no-color
+    - save_cache:
+        paths:
+        - .terraform
+        key: "v1-{{ .Environment.CIRCLE_PROJECT_REPONAME }}-{{ checksum \"provider.tf\" }}"
+    - persist_to_workspace:
+        root: /tmp
+        paths:
+        - project
+
+  validate:
+    <<: *defaults
+    steps:
+    - run:
+        name: validate terraform module
+        command: terraform validate -no-color
+
+  format_check:
+    <<: *defaults
+    steps:
+    - run:
+        name: verify proper formatting
+        command: terraform fmt -diff -check -no-color
+
+  acceptance_test:
+    <<: *defaults
+    steps:
+    - run:
+        name: acceptance test terraform module
+        command: cd acceptance && terraform apply -input=false -no-color -auto-approve
+
+workflows:
+  version: 2.1
+  test_module:
+    jobs:
+    - prepare
+    - validate:
+        <<: *default_tf_pre_steps
+        requires:
+        - prepare
+    - format_check:
+        <<: *default_tf_pre_steps
+        requires:
+        - prepare
+    - acceptance_test:
+        <<: *default_tf_pre_steps
+        requires:
+        - validate
