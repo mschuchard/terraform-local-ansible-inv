@@ -2,19 +2,9 @@
 module "ansible_inv" {
   source = "../"
 
-  formats = local.formats
-  instances = [
-    {
-      name = "localhost"
-      ip   = "127.0.0.1"
-      vars = { "ansible_connection" = "local" }
-    },
-    {
-      name = "also_localhost"
-      ip   = "127.0.0.1"
-      vars = { "ansible_connection" = "local", "foo" = "bar" }
-    }
-  ]
+  formats       = local.formats
+  instances     = local.var_instances
+  aws_instances = local.aws_instances
 }
 
 # validate generated inventory files with ad hoc ansible

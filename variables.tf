@@ -19,6 +19,12 @@ variable "instances" {
   description = "The instances and their attributes to populate the Ansible inventory file."
 }
 
+variable "aws_instances" {
+  type        = map(any)
+  default     = {}
+  description = "The 'aws_instance.this' set of objects comprising multiple instances to populate the Ansible inventory file."
+}
+
 variable "prefix" {
   type        = string
   default     = ""
