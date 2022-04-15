@@ -2,7 +2,7 @@ locals {
   # transform instances input into expected structure for yaml and json
   instances_transform = {
     "all" = {
-      "hosts" = merge(local.var_instances_transform, local.aws_instances_transform)
+      "hosts" = merge(local.aws_instances_transform, local.var_instances_transform)
     }
   }
 

@@ -5,7 +5,7 @@ resource "local_file" "ansible_inventory" {
     "${path.module}/templates/inventory.${each.value}.tmpl",
     {
       # need to separate because ternary demands same type structure
-      instances_ini  = var.instances,
+      instances_ini  = local.instances_transform,
       instances_mark = local.instances_transform
     }
   )
