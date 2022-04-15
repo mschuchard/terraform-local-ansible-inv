@@ -11,7 +11,11 @@ module "ansible_inv" {
 resource "null_resource" "inventory_validation" {
   for_each = local.formats
 
-  triggers = { inventory = module.ansible_inv.yaml }
+  triggers = {
+    ini_inventory  = module.ansible_inv.ini
+    yaml_inventory = module.ansible_inv.yaml,
+    json_inventory = module.ansible_inv.json
+  }
 
   provisioner "local-exec" {
     command = "ansible all -i inventory.${each.value} -m ping"

@@ -3,11 +3,7 @@ resource "local_file" "ansible_inventory" {
 
   content = templatefile(
     "${path.module}/templates/inventory.${each.value}.tmpl",
-    {
-      # need to separate because ternary demands same type structure
-      instances_ini  = local.instances_transform,
-      instances_mark = local.instances_transform
-    }
+    { instances = local.instances_transform }
   )
 
   # prefix inventory with name of first instance for now
