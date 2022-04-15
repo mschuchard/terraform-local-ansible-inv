@@ -13,7 +13,7 @@ defaults: &defaults
 default_tf_pre_steps: &default_tf_pre_steps
   pre-steps:
   - attach_workspace:
-      at: /tmp/project
+      at: /tmp
 
 jobs:
   prepare:

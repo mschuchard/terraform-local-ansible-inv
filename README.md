@@ -21,6 +21,8 @@ module "ansible_inv" {
 }
 ```
 
+The module creates the inventory files at the location `path.root/<prefix>inventory.<format>`. It also assigns the inventory content to the respective `<format>` module output.
+
 ## Requirements
 
 | Name | Version |

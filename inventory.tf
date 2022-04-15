@@ -14,15 +14,3 @@ resource "local_file" "ansible_inventory" {
   filename        = "${path.root}/${var.prefix}inventory.${each.value}"
   file_permission = "0644"
 }
-
-locals {
-  # transform instances input into expected structure for yaml and json
-  instances_transform = {
-    "all" = {
-      "hosts" = {
-        for instance in var.instances : instance.name =>
-        merge({ "ansible_host" = instance.ip }, instance.vars)
-      }
-    }
-  }
-}

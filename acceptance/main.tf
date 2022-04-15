@@ -38,18 +38,3 @@ output "inventory_yaml" {
 output "inventory_json" {
   value = module.ansible_inv.json
 }
-
-# local vars for dry
-locals {
-  formats = toset(["ini", "yaml", "json"])
-}
-
-# null provider specification
-terraform {
-  required_providers {
-    null = {
-      source  = "hashicorp/null"
-      version = "~> 3.0"
-    }
-  }
-}
