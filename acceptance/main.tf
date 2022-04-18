@@ -6,6 +6,7 @@ module "ansible_inv" {
   instances     = local.instances_var
   instances_aws = local.instances_aws
   instances_gcp = local.instances_gcp
+  instances_azr = local.instances_azr
 }
 
 # validate generated inventory files with ad hoc ansible

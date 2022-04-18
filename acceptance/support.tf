@@ -26,7 +26,7 @@ locals {
       id         = "i-0987654321"
       tags       = { "ansible_connection" = "local" }
       private_ip = "127.0.0.1"
-    },
+    }
   }
 
   # mock gcp instances
@@ -40,7 +40,21 @@ locals {
       instance_id       = "0987654321gfedcba"
       tags              = ["ansible_connection=local"]
       network_interface = [{ network_ip = "127.0.0.1" }]
+    }
+  }
+
+  # mock azure instances
+  instances_azr = {
+    "azr_one" = {
+      id                 = "1234567890abcdefg"
+      tags               = { "Name" = "azr_one", "foo" = "bar", "ansible_connection" = "local" }
+      private_ip_address = "127.0.0.1"
     },
+    "azr_two" = {
+      id                 = "gfedcba0987654321"
+      tags               = { "ansible_connection" = "local" }
+      private_ip_address = "127.0.0.1"
+    }
   }
 }
 

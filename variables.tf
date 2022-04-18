@@ -31,6 +31,12 @@ variable "instances_gcp" {
   description = "The 'google_compute_instance.this' map of objects comprising multiple instances to populate the Ansible inventory file."
 }
 
+variable "instances_azr" {
+  type        = map(any)
+  default     = {}
+  description = "The 'azurerm_linux|windows_virtual_machine.this' map of objects comprising multiple instances to populate the Ansible inventory file."
+}
+
 variable "prefix" {
   type        = string
   default     = ""
