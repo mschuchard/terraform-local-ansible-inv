@@ -3,8 +3,8 @@ module "ansible_inv" {
   source = "../"
 
   formats       = local.formats
-  instances     = local.var_instances
-  aws_instances = local.aws_instances
+  instances     = local.instances_var
+  instances_aws = local.instances_aws
 }
 
 # validate generated inventory files with ad hoc ansible

@@ -19,10 +19,16 @@ variable "instances" {
   description = "The instances and their attributes to populate the Ansible inventory file."
 }
 
-variable "aws_instances" {
+variable "instances_aws" {
   type        = map(any)
   default     = {}
-  description = "The 'aws_instance.this' set of objects comprising multiple instances to populate the Ansible inventory file."
+  description = "The 'aws_instance.this' map of objects comprising multiple instances to populate the Ansible inventory file."
+}
+
+variable "instances_gcp" {
+  type        = map(any)
+  default     = {}
+  description = "The 'google_compute_instance.this' map of objects comprising multiple instances to populate the Ansible inventory file."
 }
 
 variable "prefix" {

@@ -2,7 +2,7 @@
 locals {
   formats = toset(["ini", "yaml", "json"])
 
-  var_instances = [
+  instances_var = [
     {
       name = "localhost"
       ip   = "127.0.0.1"
@@ -16,7 +16,7 @@ locals {
   ]
 
   # mock aws instances
-  aws_instances = {
+  instances_aws = {
     "one" = {
       id         = "i-1234567890"
       tags       = { "Name" = "one", "foo" = "bar", "ansible_connection" = "local" }
