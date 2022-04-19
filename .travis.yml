@@ -16,7 +16,7 @@ git:
 # setup tests
 env:
   global:
-  - TF_VERSION='1.1.7'
+  - TF_VERSION='1.1.8'
   - TF_IN_AUTOMATION=true
 
 os: linux
