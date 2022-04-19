@@ -56,6 +56,20 @@ locals {
       private_ip_address = "127.0.0.1"
     }
   }
+
+  # mock vsphere instances
+  instances_vsp = {
+    "vsp_one" = {
+      name               = "vsp_one"
+      default_ip_address = "127.0.0.1"
+      vapp               = [{ "properties" = { "foo" = "bar", "ansible_connection" = "local" } }]
+    },
+    "vsp_two" = {
+      name               = "vsp_two"
+      default_ip_address = "127.0.0.1"
+      vapp               = [{ "properties" = { "ansible_connection" = "local" } }]
+    }
+  }
 }
 
 # null provider specification

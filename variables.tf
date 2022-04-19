@@ -37,6 +37,12 @@ variable "instances_azr" {
   description = "The 'azurerm_linux|windows_virtual_machine.this' map of objects comprising multiple instances to populate the Ansible inventory file."
 }
 
+variable "instances_vsp" {
+  type        = map(any)
+  default     = {}
+  description = "The 'vsphere_virtual_machine.this' map of objects comprising multiple instances to populate the Ansible inventory file."
+}
+
 variable "prefix" {
   type        = string
   default     = ""

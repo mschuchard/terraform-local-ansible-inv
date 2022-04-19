@@ -6,6 +6,7 @@ locals {
         local.instances_aws_transform,
         local.instances_gcp_transform,
         local.instances_azr_transform,
+        local.instances_vsp_transform,
         local.instances_var_transform
       )
     }
@@ -30,5 +31,10 @@ locals {
   # transform azr instances object into expected structure
   instances_azr_transform = {
     for instance in var.instances_azr : lookup(instance.tags, "Name", instance.id) => merge({ "ansible_host" = instance.private_ip_address }, instance.tags)
+  }
+
+  # transform vsp instances object into expected structure
+  instances_vsp_transform = {
+    for instance in var.instances_vsp : instance.name => merge({ "ansible_host" = instance.default_ip_address }, try(instance.vapp[0].properties, {}))
   }
 }
