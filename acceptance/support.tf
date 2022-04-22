@@ -32,12 +32,12 @@ locals {
   # mock gcp instances
   instances_gcp = {
     "gcp_one" = {
-      instance_id       = "abcdefg1234567890"
+      name              = "gcp_one"
       tags              = ["Name=gcp_one", "foo=bar", "ansible_connection=local", "othertag", "not-host-var"]
       network_interface = [{ network_ip = "127.0.0.1" }]
     },
     "gcp_two" = {
-      instance_id       = "0987654321gfedcba"
+      name              = "gcp_two"
       tags              = ["ansible_connection=local"]
       network_interface = [{ network_ip = "127.0.0.1" }]
     }

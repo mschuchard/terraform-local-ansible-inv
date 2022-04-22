@@ -25,7 +25,7 @@ locals {
 
   # transform gcp instances object into expected structure
   instances_gcp_transform = {
-    for instance in var.instances_gcp : try(instance.tags[0], instance.instance_id) => merge({ "ansible_host" = instance.network_interface.0.network_ip }, { for tag in instance.tags : regexall("[-\\w]+", tag)[0] => regexall("[-\\w]+", tag)[1] if length(regexall("[-\\w]+", tag)) == 2 })
+    for instance in var.instances_gcp : instance.name => merge({ "ansible_host" = instance.network_interface.0.network_ip }, { for tag in instance.tags : regexall("[-\\w]+", tag)[0] => regexall("[-\\w]+", tag)[1] if length(regexall("[-\\w]+", tag)) == 2 })
   }
 
   # transform azr instances object into expected structure
