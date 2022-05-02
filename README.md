@@ -21,7 +21,7 @@ module "ansible_inv" {
 }
 ```
 
-The module creates the inventory files at the location `path.root/<prefix>inventory.<format>`. It also assigns the inventory content to the respective `<format>` module output.
+The module creates the inventory files at the location `${path.root}/<prefix>inventory.<format>`. It also assigns the inventory content to the respective `<format>` module output.
 
 This module also supports direct mapping of provider-specific resource objects to module arguments. For example: the following config would automatically create a single inventory with your custom defined instances, and your platform provider instances.
 

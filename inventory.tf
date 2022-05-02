@@ -1,10 +1,7 @@
 resource "local_file" "ansible_inventory" {
   for_each = var.formats
 
-  content = templatefile(
-    "${path.module}/templates/inventory.${each.value}.tmpl",
-    { instances = local.instances_transform }
-  )
+  content = local.inv_content[each.value]
 
   # prefix inventory with name of first instance for now
   filename        = "${path.root}/${var.prefix}inventory.${each.value}"
