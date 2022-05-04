@@ -20,25 +20,25 @@ variable "instances" {
 }
 
 variable "instances_aws" {
-  type        = map(any)
+  type        = any
   default     = {}
   description = "The 'aws_instance.this' map of objects comprising multiple instances to populate the Ansible inventory file."
 }
 
 variable "instances_gcp" {
-  type        = map(any)
+  type        = any
   default     = {}
   description = "The 'google_compute_instance.this' map of objects comprising multiple instances to populate the Ansible inventory file."
 }
 
 variable "instances_azr" {
-  type        = map(any)
+  type        = any
   default     = {}
   description = "The 'azurerm_linux|windows_virtual_machine.this' map of objects comprising multiple instances to populate the Ansible inventory file."
 }
 
 variable "instances_vsp" {
-  type        = map(any)
+  type        = any
   default     = {}
   description = "The 'vsphere_virtual_machine.this' map of objects comprising multiple instances to populate the Ansible inventory file."
 }

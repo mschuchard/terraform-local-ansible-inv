@@ -1,5 +1,6 @@
 ### 1.0.2 (Next)
 - Update Azure instances to use `name` argument from resource.
+- Fix types for direct instance resource population.
 
 ### 1.0.1
 - Support direct input of AWS instance resource objects.
