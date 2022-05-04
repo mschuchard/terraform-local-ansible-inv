@@ -38,11 +38,19 @@ locals {
 
   # transform azr instances object into expected nested structure
   instances_azr_transform = {
-    for instance in var.instances_azr : instance.name => merge({ "ansible_host" = instance.private_ip_address }, instance.tags)
+    for instance in var.instances_azr : instance.name => merge(
+      { "ansible_host" = instance.private_ip_address },
+      { "ansible_become_user" = try(instance.admin_ssh_key.0.username, instance.admin_username) },
+      instance.tags
+    )
   }
 
   # transform vsp instances object into expected nested structure
   instances_vsp_transform = {
-    for instance in var.instances_vsp : instance.name => merge({ "ansible_host" = instance.default_ip_address }, try(instance.vapp[0].properties, {}))
+    for instance in var.instances_vsp : instance.name => merge(
+      { "ansible_host" = instance.default_ip_address },
+      try({ "ansible_become_user" = instance.clone.0.customize.0.windows_options.0.full_name }, {}),
+      try(instance.vapp[0].properties, {})
+    )
   }
 }

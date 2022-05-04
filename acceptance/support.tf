@@ -50,12 +50,15 @@ locals {
       name               = "azr_one"
       tags               = { "foo" = "bar", "ansible_connection" = "local" }
       private_ip_address = "127.0.0.1"
+      admin_ssh_key      = [{ "username" = "not_admin" }]
+      admin_username     = "administrator"
     },
     "azr_two" = {
       id                 = "gfedcba0987654321"
       name               = "azr_two"
       tags               = { "ansible_connection" = "local" }
       private_ip_address = "127.0.0.1"
+      admin_username     = "administrator"
     }
   }
 
@@ -70,6 +73,7 @@ locals {
       name               = "vsp_two"
       default_ip_address = "127.0.0.1"
       vapp               = [{ "properties" = { "ansible_connection" = "local" } }]
+      clone              = [{ "customize" = [{ "windows_options" = [{ "full_name" = "not_administrator" }] }] }]
     }
   }
 }
