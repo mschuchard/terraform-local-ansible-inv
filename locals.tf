@@ -38,7 +38,7 @@ locals {
 
   # transform azr instances object into expected nested structure
   instances_azr_transform = {
-    for instance in var.instances_azr : lookup(instance.tags, "Name", instance.id) => merge({ "ansible_host" = instance.private_ip_address }, instance.tags)
+    for instance in var.instances_azr : instance.name => merge({ "ansible_host" = instance.private_ip_address }, instance.tags)
   }
 
   # transform vsp instances object into expected nested structure

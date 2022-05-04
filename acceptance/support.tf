@@ -47,11 +47,13 @@ locals {
   instances_azr = {
     "azr_one" = {
       id                 = "1234567890abcdefg"
-      tags               = { "Name" = "azr_one", "foo" = "bar", "ansible_connection" = "local" }
+      name               = "azr_one"
+      tags               = { "foo" = "bar", "ansible_connection" = "local" }
       private_ip_address = "127.0.0.1"
     },
     "azr_two" = {
       id                 = "gfedcba0987654321"
+      name               = "azr_two"
       tags               = { "ansible_connection" = "local" }
       private_ip_address = "127.0.0.1"
     }
