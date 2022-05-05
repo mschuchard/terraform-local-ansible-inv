@@ -3,6 +3,7 @@
 - Fix types for direct instance resource population.
 - Add `ansible_become_user` auto-populate for Azure.
 - Add `ansible_become_user` auto-populate for VSphere.
+- Auto-populate groups for each input platform.
 
 ### 1.0.1
 - Support direct input of AWS instance resource objects.
