@@ -8,7 +8,8 @@ Typically you would want to map the Terraform outputs and/or exported attributes
 ```terraform
 # example declaration
 module "ansible_inv" {
-  source = "mschuchard/ansible-inv/local"
+  source  = "mschuchard/ansible-inv/local"
+  version = "~> 1.0.2"
 
   formats   = ["yaml"]
   instances = [
@@ -58,7 +59,7 @@ module "ansible_inv" {
 }
 ```
 
-Note also that correspondingly named groups will automatically be created for each platform as children of the `all` group, andthe groups will also contain all of the specified instances as hosts. For example, all of the AWS instances will automatically be placed in a child `aws` group within the `all` group.
+Note also that correspondingly named groups will automatically be created for each platform as children of the `all` group, and the groups will also contain all of the specified instances as hosts. For example, all of the AWS instances will automatically be placed in a child `aws` group within the `all` group.
 
 ### AWS
 
@@ -78,7 +79,7 @@ foo:bar
 
 ### Azure
 
-In this situation the `ansible_host` will be set to the instance primary private IP address. The host entry key will be set to the `name` argument, and will default to the instance id otherwise. The `ansible_become_user` will be set to the `username` of the `admin_ssh_key` block if it exists; otherwise it will be set to the `admin_username` argument. The instance tags will also propagate as key value pairs for the host variables.
+In this situation the `ansible_host` will be set to the instance primary private IP address. The host entry key will be set to the `name` argument. The `ansible_become_user` will be set to the `username` of the `admin_ssh_key` block if it exists; otherwise it will be set to the `admin_username` argument. The instance tags will also propagate as key value pairs for the host variables.
 
 ### VSphere
 
@@ -113,10 +114,10 @@ No modules.
 |------|-------------|------|---------|:--------:|
 | <a name="input_formats"></a> [formats](#input\_formats) | The list of formats to output the Ansible inventory. Supported formats are: 'ini', 'yaml', and 'json'. | `set(string)` | `[]` | no |
 | <a name="input_instances"></a> [instances](#input\_instances) | The instances and their attributes to populate the Ansible inventory file. | <pre>set(object({<br>    name = string<br>    ip   = string<br>    vars = map(string)<br>  }))</pre> | `[]` | no |
-| <a name="input_instances_aws"></a> [instances\_aws](#input\_instances\_aws) | The 'aws\_instance.this' map of objects comprising multiple instances to populate the Ansible inventory file. | `map(any)` | `{}` | no |
-| <a name="input_instances_azr"></a> [instances\_azr](#input\_instances\_azr) | The 'azurerm\_linux\|windows\_virtual\_machine.this' map of objects comprising multiple instances to populate the Ansible inventory file. | `map(any)` | `{}` | no |
-| <a name="input_instances_gcp"></a> [instances\_gcp](#input\_instances\_gcp) | The 'google\_compute\_instance.this' map of objects comprising multiple instances to populate the Ansible inventory file. | `map(any)` | `{}` | no |
-| <a name="input_instances_vsp"></a> [instances\_vsp](#input\_instances\_vsp) | The 'vsphere\_virtual\_machine.this' map of objects comprising multiple instances to populate the Ansible inventory file. | `map(any)` | `{}` | no |
+| <a name="input_instances_aws"></a> [instances\_aws](#input\_instances\_aws) | The 'aws\_instance.this' map of objects comprising multiple instances to populate the Ansible inventory file. | `any` | `{}` | no |
+| <a name="input_instances_azr"></a> [instances\_azr](#input\_instances\_azr) | The 'azurerm\_linux\|windows\_virtual\_machine.this' map of objects comprising multiple instances to populate the Ansible inventory file. | `any` | `{}` | no |
+| <a name="input_instances_gcp"></a> [instances\_gcp](#input\_instances\_gcp) | The 'google\_compute\_instance.this' map of objects comprising multiple instances to populate the Ansible inventory file. | `any` | `{}` | no |
+| <a name="input_instances_vsp"></a> [instances\_vsp](#input\_instances\_vsp) | The 'vsphere\_virtual\_machine.this' map of objects comprising multiple instances to populate the Ansible inventory file. | `any` | `{}` | no |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | A prefix to prepend to the name of the output inventory files. For example: the INI inventory will be named <prefix>inventory.ini. | `string` | `""` | no |
 
 ## Outputs

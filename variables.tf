@@ -1,7 +1,7 @@
 variable "formats" {
   type        = set(string)
   default     = []
-  description = "The list of formats to output the Ansible inventory. Supported formats are: 'ini', 'yaml', and 'json'."
+  description = "The set of formats to output the Ansible inventory. Supported formats are: 'ini', 'yaml', and 'json'."
 
   validation {
     condition     = length(setunion(["ini", "yaml", "json"], var.formats)) <= 3
@@ -46,5 +46,5 @@ variable "instances_vsp" {
 variable "prefix" {
   type        = string
   default     = ""
-  description = "A prefix to prepend to the name of the output inventory files. For example: the INI inventory will be named <prefix>inventory.ini."
+  description = "A prefix to prepend to the name of the output inventory files. For example: the INI inventory will be named '<prefix>inventory.ini'."
 }
