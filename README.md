@@ -58,6 +58,8 @@ module "ansible_inv" {
 }
 ```
 
+Note also that correspondingly named groups will automatically be created for each platform as children of the `all` group, andthe groups will also contain all of the specified instances as hosts. For example, all of the AWS instances will automatically be placed in a child `aws` group within the `all` group.
+
 ### AWS
 
 In this situation the `ansible_host` will be set to the instance private IP address. The host entry key will be set to the `Name` tag, and will default to the instance id otherwise. The instance tags will also propagate as key value pairs for the host variables.
@@ -76,11 +78,11 @@ foo:bar
 
 ### Azure
 
-In this situation the `ansible_host` will be set to the instance primary private IP address. The host entry key will be set to the `Name` tag, and will default to the instance id otherwise. The instance tags will also propagate as key value pairs for the host variables.
+In this situation the `ansible_host` will be set to the instance primary private IP address. The host entry key will be set to the `name` argument, and will default to the instance id otherwise. The `ansible_become_user` will be set to the `username` of the `admin_ssh_key` block if it exists; otherwise it will be set to the `admin_username` argument. The instance tags will also propagate as key value pairs for the host variables.
 
 ### VSphere
 
-The `ansible_host` will be set to the `default_ip_address` attribute (the primary reachable IP address as determined by VSphere). The host entry will be set to the `name` argument. The `properties` map from `vapp` will propagate as key value pairs for the host variables.
+The `ansible_host` will be set to the `default_ip_address` attribute (the primary reachable IP address as determined by VSphere). The host entry will be set to the `name` argument. The `ansible_become_user` will be set to the `full_name` of the `windows_options` block of the `customize` block of the `clone` block if it exists. The `properties` map from `vapp` will propagate as key value pairs for the host variables.
 
 ## Requirements
 

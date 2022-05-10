@@ -1,4 +1,4 @@
-### 1.0.2 (Next)
+### 1.0.2
 - Update Azure instances to use `name` argument from resource.
 - Fix types for direct instance resource population.
 - Add `ansible_become_user` auto-populate for Azure.
