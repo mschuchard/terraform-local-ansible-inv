@@ -10,8 +10,11 @@ locals {
   # merge transformed components and transform to overall expected structure
   instances_transform = {
     "all" = {
-      "hosts" = local.instances_var_transform,
+      "hosts" = [],
       "children" = {
+        "custom" = {
+          "hosts" = length(var.instances) > 0 ? local.instances_var_transform : {}
+        }
         "aws" = {
           "hosts" = length(var.instances_aws) > 0 ? local.instances_aws_transform : {}
         }

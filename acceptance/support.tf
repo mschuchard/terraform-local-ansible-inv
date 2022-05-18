@@ -2,18 +2,18 @@
 locals {
   formats = toset(["ini", "yaml", "json"])
 
-  instances_var = [
-    {
+  instances_var = {
+    "group_one" = {
       name = "var_one"
       ip   = "127.0.0.1"
       vars = { "ansible_connection" = "local" }
     },
-    {
+    "group_two" = {
       name = "var_two"
       ip   = "127.0.0.1"
       vars = { "ansible_connection" = "local", "foo" = "bar" }
     }
-  ]
+  }
 
   # mock aws instances
   instances_aws = {

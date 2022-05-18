@@ -1,3 +1,6 @@
+### 1.1.0 (Next)
+- Update `instances` var to `map` to support Ansible group specification.
+
 ### 1.0.2
 - Update Azure instances to use `name` argument from resource.
 - Fix types for direct instance resource population.

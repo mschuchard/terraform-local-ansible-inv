@@ -10,12 +10,12 @@ variable "formats" {
 }
 
 variable "instances" {
-  type = set(object({
+  type = map(object({
     name = string
     ip   = string
     vars = map(string)
   }))
-  default     = []
+  default     = {}
   description = "The instances and their attributes to populate the Ansible inventory file."
 }
 
