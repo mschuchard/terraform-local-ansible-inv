@@ -9,6 +9,13 @@ locals {
     )
   }
 
+  # construct instances groups
+  instances_var_groups = {
+    "custom" = {
+      "hosts" = length(var.instances) > 0 ? local.instances_var_transform : {}
+    }
+  }
+
   # aws
   # transform aws instances object into expected nested structure
   instances_aws_transform = {
@@ -18,6 +25,13 @@ locals {
     )
   }
 
+  # construct aws instances groups
+  instances_aws_groups = {
+    "aws" = {
+      "hosts" = length(var.instances_aws) > 0 ? local.instances_aws_transform : {}
+    }
+  }
+
   # google
   # transform gcp instances object into expected nested structure
   instances_gcp_transform = {
@@ -25,6 +39,13 @@ locals {
       { "ansible_host" = instance.network_interface.0.network_ip },
       { for tag in instance.tags : regexall("[-\\w]+", tag)[0] => regexall("[-\\w]+", tag)[1] if length(regexall("[-\\w]+", tag)) == 2 }
     )
+  }
+
+  # construct gcp instances groups
+  instances_gcp_groups = {
+    "gcp" = {
+      "hosts" = length(var.instances_gcp) > 0 ? local.instances_gcp_transform : {}
+    }
   }
 
   # azure
@@ -37,6 +58,13 @@ locals {
     )
   }
 
+  # construct azure instances groups
+  instances_azr_groups = {
+    "azr" = {
+      "hosts" = length(var.instances_azr) > 0 ? local.instances_azr_transform : {}
+    }
+  }
+
   # vsphere
   # transform vsp instances object into expected nested structure
   instances_vsp_transform = {
@@ -46,4 +74,21 @@ locals {
       try(instance.vapp[0].properties, {})
     )
   }
+
+  # construct vsp instances groups
+  instances_vsp_groups = {
+    "vsp" = {
+      "hosts" = length(var.instances_vsp) > 0 ? local.instances_vsp_transform : {}
+    }
+  }
+
+  # all
+  # merge all groups
+  instances_groups = merge(
+    local.instances_var_groups,
+    local.instances_aws_groups,
+    local.instances_gcp_groups,
+    local.instances_azr_groups,
+    local.instances_vsp_groups
+  )
 }

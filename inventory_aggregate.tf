@@ -10,24 +10,8 @@ locals {
   # merge transformed components and transform to overall expected structure
   instances_transform = {
     "all" = {
-      "hosts" = [],
-      "children" = {
-        "custom" = {
-          "hosts" = length(var.instances) > 0 ? local.instances_var_transform : {}
-        }
-        "aws" = {
-          "hosts" = length(var.instances_aws) > 0 ? local.instances_aws_transform : {}
-        }
-        "gcp" = {
-          "hosts" = length(var.instances_gcp) > 0 ? local.instances_gcp_transform : {}
-        }
-        "azr" = {
-          "hosts" = length(var.instances_azr) > 0 ? local.instances_azr_transform : {}
-        }
-        "vsp" = {
-          "hosts" = length(var.instances_vsp) > 0 ? local.instances_vsp_transform : {}
-        }
-      }
+      "hosts"    = [],
+      "children" = local.instances_groups
     }
   }
 }
