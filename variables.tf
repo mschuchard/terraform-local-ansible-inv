@@ -10,13 +10,17 @@ variable "formats" {
 }
 
 variable "instances" {
-  type = map(object({
-    name = string
-    ip   = string
-    vars = map(string)
-  }))
+  type = map(
+    set(
+      object({
+        name = string
+        ip   = string
+        vars = map(string)
+      })
+    )
+  )
   default     = {}
-  description = "The instances and their attributes to populate the Ansible inventory file."
+  description = "The instances and their attributes to populate the Ansible inventory file. The map keys will be used to construct Ansible inventory groups with the paired object values as the group host members."
 }
 
 variable "instances_aws" {
