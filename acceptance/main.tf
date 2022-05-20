@@ -8,6 +8,7 @@ module "ansible_inv" {
   instances_gcp = local.instances_gcp
   instances_azr = local.instances_azr
   instances_vsp = local.instances_vsp
+  group_vars    = local.group_vars
 }
 
 # validate generated inventory files with ad hoc ansible

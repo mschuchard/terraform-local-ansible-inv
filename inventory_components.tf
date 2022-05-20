@@ -13,7 +13,10 @@ locals {
           { "ansible_host" = instance.ip },
           instance.vars
         )
-      }
+      },
+      # add vars for this group if they exist
+      # lookup function incompatible with map(any) type
+      "vars" = try(var.group_vars[group], {})
     }
   }
 
@@ -29,7 +32,9 @@ locals {
   # construct aws instances groups
   instances_aws_groups = {
     "aws" = {
-      "hosts" = length(var.instances_aws) > 0 ? local.instances_aws_transform : {}
+      "hosts" = length(var.instances_aws) > 0 ? local.instances_aws_transform : {},
+      # lookup function incompatible with map(any) type
+      "vars" = try(var.group_vars["aws"], {})
     }
   }
 
@@ -45,7 +50,9 @@ locals {
   # construct gcp instances groups
   instances_gcp_groups = {
     "gcp" = {
-      "hosts" = length(var.instances_gcp) > 0 ? local.instances_gcp_transform : {}
+      "hosts" = length(var.instances_gcp) > 0 ? local.instances_gcp_transform : {},
+      # lookup function incompatible with map(any) type
+      "vars" = try(var.group_vars["gcp"], {})
     }
   }
 
@@ -62,7 +69,9 @@ locals {
   # construct azure instances groups
   instances_azr_groups = {
     "azr" = {
-      "hosts" = length(var.instances_azr) > 0 ? local.instances_azr_transform : {}
+      "hosts" = length(var.instances_azr) > 0 ? local.instances_azr_transform : {},
+      # lookup function incompatible with map(any) type
+      "vars" = try(var.group_vars["azr"], {})
     }
   }
 
@@ -79,7 +88,9 @@ locals {
   # construct vsp instances groups
   instances_vsp_groups = {
     "vsp" = {
-      "hosts" = length(var.instances_vsp) > 0 ? local.instances_vsp_transform : {}
+      "hosts" = length(var.instances_vsp) > 0 ? local.instances_vsp_transform : {},
+      # lookup function incompatible with map(any) type
+      "vars" = try(var.group_vars["vsp"], {})
     }
   }
 

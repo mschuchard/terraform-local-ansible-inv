@@ -1,6 +1,7 @@
 ### 1.1.0 (Next)
 - Update `instances` var to `map(set(object))` to support Ansible group specification.
 - Support Ansible inventory groups for `instances` variable.
+- Add functionality for Ansible group variable dynamic population.
 
 ### 1.0.2
 - Update Azure instances to use `name` argument from resource.
