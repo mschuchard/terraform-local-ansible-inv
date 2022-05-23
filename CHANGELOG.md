@@ -1,4 +1,4 @@
-### 1.1.0 (Next)
+### 1.1.0
 - Update `instances` var to `map(set(object))` to support Ansible group specification.
 - Support Ansible inventory groups for `instances` variable.
 - Add functionality for Ansible group variable dynamic population.

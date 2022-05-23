@@ -9,16 +9,33 @@ Typically you would want to map the Terraform outputs and/or exported attributes
 # example declaration
 module "ansible_inv" {
   source  = "mschuchard/ansible-inv/local"
-  version = "~> 1.0.2"
+  version = "~> 1.1.0"
 
   formats   = ["yaml"]
-  instances = [
-    {
-      name = "localhost"
-      ip   = "127.0.0.1"
-      vars = { "ansible_connection" = "local", "foo" = "bar" }
-    }
-  ]
+  instances = {
+    "my_group" = [
+      {
+        name = "localhost"
+        ip   = "127.0.0.1"
+        vars = { "ansible_connection" = "local", "foo" = "bar" }
+      },
+      {
+        name = "also_localhost"
+        ip   = "127.0.0.1"
+        vars = { "ansible_connection" = "local", "foo" = "bar" }
+      }
+    ],
+    "other_group" = [
+      {
+        name = instance.this.hostname
+        ip   = instance.this.ip
+        vars = instance.this.tags
+      }
+    ]
+  }
+  group_vars = {
+    "my_group" = { "number" = 1 }
+  }
 }
 ```
 
@@ -50,12 +67,16 @@ resource "vsphere_virtual_machine" "this" {
 module "ansible_inv" {
   source = "mschuchard/ansible-inv/local"
 
-  formats       = ["json"]
+  formats       = ["json", "ini"]
   instances     = local.instances
   instances_aws = aws_instance.this
   instances_gcp = google_compute_instance.this
   instances_azr = azurerm_linux_virtual_machine.this
   instances_vsp = vsphere_virtual_machine.this
+  group_vars    = {
+    "aws" = { "platform" = "aws" },
+    "vsp" = { "on_prem" =  true }
+  }
 }
 ```
 
@@ -112,13 +133,14 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_formats"></a> [formats](#input\_formats) | The list of formats to output the Ansible inventory. Supported formats are: 'ini', 'yaml', and 'json'. | `set(string)` | `[]` | no |
-| <a name="input_instances"></a> [instances](#input\_instances) | The instances and their attributes to populate the Ansible inventory file. | <pre>set(object({<br>    name = string<br>    ip   = string<br>    vars = map(string)<br>  }))</pre> | `[]` | no |
+| <a name="input_formats"></a> [formats](#input\_formats) | The set of formats to output the Ansible inventory. Supported formats are: 'ini', 'yaml', and 'json'. | `set(string)` | `[]` | no |
+| <a name="input_group_vars"></a> [group\_vars](#input\_group\_vars) | The map of Ansible group variables. Each key in the map is the name of a group (this includes support for the 'all' group), and each value is the object representing the pairs of group variable names and values. | `map(any)` | `{}` | no |
+| <a name="input_instances"></a> [instances](#input\_instances) | The instances and their attributes to populate the Ansible inventory file. The map keys will be used to construct Ansible inventory groups with the paired object values as the group host members. | <pre>map(<br>    set(<br>      object({<br>        name = string<br>        ip   = string<br>        vars = map(string)<br>      })<br>    )<br>  )</pre> | `{}` | no |
 | <a name="input_instances_aws"></a> [instances\_aws](#input\_instances\_aws) | The 'aws\_instance.this' map of objects comprising multiple instances to populate the Ansible inventory file. | `any` | `{}` | no |
 | <a name="input_instances_azr"></a> [instances\_azr](#input\_instances\_azr) | The 'azurerm\_linux\|windows\_virtual\_machine.this' map of objects comprising multiple instances to populate the Ansible inventory file. | `any` | `{}` | no |
 | <a name="input_instances_gcp"></a> [instances\_gcp](#input\_instances\_gcp) | The 'google\_compute\_instance.this' map of objects comprising multiple instances to populate the Ansible inventory file. | `any` | `{}` | no |
 | <a name="input_instances_vsp"></a> [instances\_vsp](#input\_instances\_vsp) | The 'vsphere\_virtual\_machine.this' map of objects comprising multiple instances to populate the Ansible inventory file. | `any` | `{}` | no |
-| <a name="input_prefix"></a> [prefix](#input\_prefix) | A prefix to prepend to the name of the output inventory files. For example: the INI inventory will be named <prefix>inventory.ini. | `string` | `""` | no |
+| <a name="input_prefix"></a> [prefix](#input\_prefix) | A prefix to prepend to the name of the output inventory files. For example: the INI inventory will be named '\<prefix>inventory.ini'. | `string` | `""` | no |
 
 ## Outputs
 
