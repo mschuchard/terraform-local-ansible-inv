@@ -11,7 +11,9 @@ locals {
   instances_transform = {
     "all" = {
       "hosts"    = [],
-      "children" = local.instances_groups
+      "children" = local.instances_groups,
+      # lookup function incompatible with map(any) type
+      "vars" = try(var.group_vars["all"], {})
     }
   }
 }

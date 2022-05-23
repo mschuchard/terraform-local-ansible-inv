@@ -88,11 +88,12 @@ locals {
 
   # mock group vars
   group_vars = {
-    "group_one" = { "ansible_connection" = "local" },
+    "group_one" = { "ansible_connection" = "local", "custom" = true },
     "aws"       = { "ansible_connection" = "local" },
     "gcp"       = { "ansible_connection" = "local" },
     "azr"       = { "ansible_connection" = "local" },
-    "vsp"       = { "ansible_connection" = "local" }
+    "vsp"       = { "ansible_connection" = "local" },
+    "all"       = { "terraform" = 5 }
   }
 }
 

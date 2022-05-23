@@ -1,4 +1,4 @@
-# inventory formatting vars
+# inventory formatting
 variable "formats" {
   type        = set(string)
   default     = []
@@ -16,7 +16,7 @@ variable "prefix" {
   description = "A prefix to prepend to the name of the output inventory files. For example: the INI inventory will be named '<prefix>inventory.ini'."
 }
 
-# instance vars
+# hosts and host vars
 variable "instances" {
   type = map(
     set(
@@ -55,9 +55,9 @@ variable "instances_vsp" {
   description = "The 'vsphere_virtual_machine.this' map of objects comprising multiple instances to populate the Ansible inventory file."
 }
 
-# group vars
+# groups
 variable "group_vars" {
   type        = map(any)
   default     = {}
-  description = "The map of Ansible group variables. Each key in the map is the name of a group, and each value is the object representing the pairs of group variable names and values."
+  description = "The map of Ansible group variables. Each key in the map is the name of a group (this includes support for the 'all' group), and each value is the object representing the pairs of group variable names and values."
 }
