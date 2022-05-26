@@ -36,3 +36,6 @@ output "inventory_yaml" {
 output "inventory_json" {
   value = module.ansible_inv.json
 }
+output "inventories" {
+  value = module.ansible_inv.inv_files
+}

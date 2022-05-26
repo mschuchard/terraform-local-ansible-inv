@@ -12,3 +12,8 @@ output "json" {
   value       = contains(var.formats, "json") ? local.inv_content["json"] : ""
   description = "The Ansible JSON format inventory content."
 }
+
+output "inv_files" {
+  value       = [for format in var.formats : "${path.root}/${var.prefix}inventory.${format}"]
+  description = "The list of inventory file output paths."
+}
