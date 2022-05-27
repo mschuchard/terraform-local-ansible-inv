@@ -5,5 +5,5 @@ resource "local_file" "ansible_inventory" {
 
   # prefix inventory with name of first instance for now
   filename        = "${path.root}/${var.prefix}inventory.${each.value}"
-  file_permission = "0644"
+  file_permission = var.inv_file_perms
 }

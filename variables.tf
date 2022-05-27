@@ -16,6 +16,17 @@ variable "prefix" {
   description = "A prefix to prepend to the name of the output inventory files. For example: the INI inventory will be named '<prefix>inventory.ini'."
 }
 
+variable "inv_file_perms" {
+  type        = string
+  default     = "0644"
+  description = "The file permissions mode for the output Ansible inventory file(s)."
+
+  validation {
+    condition     = can(regex("^\\d{4}$", var.inv_file_perms))
+    error_message = "The permissions mode must be in four digit octal notation."
+  }
+}
+
 # hosts and host vars
 variable "instances" {
   type = map(

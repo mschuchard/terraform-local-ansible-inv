@@ -1,5 +1,6 @@
 ### 1.1.1
 - Add `inv_files` output.
+- Add `inv_file_perms` variable.
 
 ### 1.1.0
 - Update `instances` var to `map(set(object))` to support Ansible group specification.
