@@ -10,7 +10,7 @@ locals {
   # merge transformed components and transform to overall expected structure
   instances_transform = {
     "all" = {
-      "hosts"    = [],
+      "hosts"    = {},
       "children" = local.instances_groups,
       # lookup function incompatible with map(any) type
       "vars" = try(var.group_vars["all"], {})

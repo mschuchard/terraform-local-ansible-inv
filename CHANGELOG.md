@@ -2,6 +2,7 @@
 - Add `inv_files` output.
 - Add `inv_file_perms` variable.
 - Attempt to detect if Windows instance, and set transport to `winrm` if true.
+- Fix inventory `all` group `hosts` entry type.
 
 ### 1.1.0
 - Update `instances` var to `map(set(object))` to support Ansible group specification.
