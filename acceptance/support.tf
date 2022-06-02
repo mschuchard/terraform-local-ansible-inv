@@ -63,11 +63,12 @@ locals {
       admin_username     = "administrator"
     },
     "azr_two" = {
-      id                 = "gfedcba0987654321"
-      name               = "azr_two"
-      tags               = {}
-      private_ip_address = "127.0.0.1"
-      admin_username     = "administrator"
+      id                     = "gfedcba0987654321"
+      name                   = "azr_two"
+      tags                   = {}
+      private_ip_address     = "127.0.0.1"
+      admin_username         = "administrator"
+      source_image_reference = [{ offer = "WindowsServer" }]
     }
   }
 
