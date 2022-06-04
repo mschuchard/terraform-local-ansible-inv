@@ -22,7 +22,7 @@ module "ansible_inv" {
       {
         name = "also_localhost"
         ip   = "127.0.0.1"
-        vars = { "ansible_connection" = "local", "foo" = "bar" }
+        vars = { "ansible_connection" = "local", "baz" = "bat" }
       }
     ],
     "other_group" = [
@@ -84,7 +84,7 @@ Note also that correspondingly named groups will automatically be created for ea
 
 ### AWS
 
-In this situation the `ansible_host` will be set to the instance private IP address. The host entry key will be set to the `Name` tag, and will default to the instance id otherwise. The instance tags will also propagate as key value pairs for the host variables.
+In this situation the `ansible_host` will be set to the instance private IP address. The host entry key will be set to the `Name` tag, and will default to the instance id otherwise. The instance tags will also propagate as key value pairs for the host variables. If an exported attribute for `password_data` is found, then the `ansible_transport` will be set to `winrm` for the host.
 
 ### GCP
 
@@ -100,11 +100,11 @@ foo:bar
 
 ### Azure
 
-In this situation the `ansible_host` will be set to the instance primary private IP address. The host entry key will be set to the `name` argument. The `ansible_become_user` will be set to the `username` of the `admin_ssh_key` block if it exists; otherwise it will be set to the `admin_username` argument. The instance tags will also propagate as key value pairs for the host variables.
+In this situation the `ansible_host` will be set to the instance primary private IP address. The host entry key will be set to the `name` argument. The `ansible_become_user` will be set to the `username` of the `admin_ssh_key` block if it exists; otherwise it will be set to the `admin_username` argument. The instance tags will also propagate as key value pairs for the host variables. If the string `Windows` is found in the value for the `offer` argument in the `source_image_reference` block, then the `ansible_transport` will be set to `winrm` for the host.
 
 ### VSphere
 
-The `ansible_host` will be set to the `default_ip_address` attribute (the primary reachable IP address as determined by VSphere). The host entry will be set to the `name` argument. The `ansible_become_user` will be set to the `full_name` of the `windows_options` block of the `customize` block of the `clone` block if it exists. The `properties` map from `vapp` will propagate as key value pairs for the host variables.
+The `ansible_host` will be set to the `default_ip_address` attribute (the primary reachable IP address as determined by VSphere). The host entry will be set to the `name` argument. The `ansible_become_user` will be set to the `full_name` of the `windows_options` block of the `customize` block of the `clone` block if it exists. The `properties` map from `vapp` will propagate as key value pairs for the host variables. If the block `windows_options` is found in the `customize` block in the `clone` block, then the `ansible_transport` will be set to `winrm` for the host.
 
 ## Requirements
 
@@ -140,12 +140,14 @@ No modules.
 | <a name="input_instances_azr"></a> [instances\_azr](#input\_instances\_azr) | The 'azurerm\_linux\|windows\_virtual\_machine.this' map of objects comprising multiple instances to populate the Ansible inventory file. | `any` | `{}` | no |
 | <a name="input_instances_gcp"></a> [instances\_gcp](#input\_instances\_gcp) | The 'google\_compute\_instance.this' map of objects comprising multiple instances to populate the Ansible inventory file. | `any` | `{}` | no |
 | <a name="input_instances_vsp"></a> [instances\_vsp](#input\_instances\_vsp) | The 'vsphere\_virtual\_machine.this' map of objects comprising multiple instances to populate the Ansible inventory file. | `any` | `{}` | no |
-| <a name="input_prefix"></a> [prefix](#input\_prefix) | A prefix to prepend to the name of the output inventory files. For example: the INI inventory will be named '\<prefix>inventory.ini'. | `string` | `""` | no |
+| <a name="input_inv_file_perms"></a> [inv\_file\_perms](#input\_inv\_file\_perms) | The file permissions mode for the output Ansible inventory file(s). | `string` | `"0644"` | no |
+| <a name="input_prefix"></a> [prefix](#input\_prefix) | A prefix to prepend to the name of the output inventory files. For example: the INI inventory will be named '<prefix>inventory.ini'. | `string` | `""` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
 | <a name="output_ini"></a> [ini](#output\_ini) | The Ansible INI format inventory content. |
+| <a name="output_inv_files"></a> [inv\_files](#output\_inv\_files) | The list of inventory file output paths. |
 | <a name="output_json"></a> [json](#output\_json) | The Ansible JSON format inventory content. |
 | <a name="output_yaml"></a> [yaml](#output\_yaml) | The Ansible YAML format inventory content. |

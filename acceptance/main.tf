@@ -16,7 +16,7 @@ resource "null_resource" "inventory_validation" {
   for_each = local.formats
 
   triggers = {
-    ini_inventory  = module.ansible_inv.ini
+    ini_inventory  = module.ansible_inv.ini,
     yaml_inventory = module.ansible_inv.yaml,
     json_inventory = module.ansible_inv.json
   }

@@ -1,4 +1,4 @@
-### 1.1.1 (Next)
+### 1.1.1
 - Add `inv_files` output.
 - Add `inv_file_perms` variable.
 - Attempt to detect if Windows instance, and set transport to `winrm` if true.
