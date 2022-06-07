@@ -25,7 +25,7 @@ locals {
   instances_aws_transform = {
     for instance in var.instances_aws : lookup(instance.tags, "Name", instance.id) => merge(
       { "ansible_host" = instance.private_ip },
-      instance.tags,
+      try(instance.tags, {}),
       can(instance.password_data) ? { "ansible_transport" = "winrm" } : {}
     )
   }
@@ -63,7 +63,7 @@ locals {
     for instance in var.instances_azr : instance.name => merge(
       { "ansible_host" = instance.private_ip_address },
       { "ansible_become_user" = try(instance.admin_ssh_key.0.username, instance.admin_username) },
-      instance.tags,
+      try(instance.tags, {}),
       can(regex("Windows", instance.source_image_reference.0.offer)) ? { "ansible_transport" = "winrm" } : {}
     )
   }

@@ -1,3 +1,7 @@
+### 1.1.2 (Next)
+- Update ini inventory template for recent group changes.
+- Safer handling of empty tag attributes in provider resources.
+
 ### 1.1.1
 - Add `inv_files` output.
 - Add `inv_file_perms` variable.
