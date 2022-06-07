@@ -44,6 +44,8 @@ locals {
   instances_gcp_transform = {
     for instance in var.instances_gcp : instance.name => merge(
       { "ansible_host" = instance.network_interface.0.network_ip },
+      try(instance.labels, {}),
+      try(instance.metadata, {}),
       { for tag in instance.tags : regexall("[-\\w]+", tag)[0] => regexall("[-\\w]+", tag)[1] if length(regexall("[-\\w]+", tag)) == 2 }
     )
   }

@@ -33,7 +33,6 @@ locals {
     },
     "aws_two" = {
       id         = "i-0987654321"
-      tags       = {}
       private_ip = "127.0.0.1"
     }
   }
@@ -47,7 +46,8 @@ locals {
     },
     "gcp_two" = {
       name              = "gcp_two"
-      tags              = []
+      labels            = { "my_label" = "label_value " }
+      metadata          = { "my_metadata" = "metadata_value " }
       network_interface = [{ network_ip = "127.0.0.1" }]
     }
   }
@@ -65,7 +65,6 @@ locals {
     "azr_two" = {
       id                     = "gfedcba0987654321"
       name                   = "azr_two"
-      tags                   = {}
       private_ip_address     = "127.0.0.1"
       admin_username         = "administrator"
       source_image_reference = [{ offer = "WindowsServer" }]
@@ -82,7 +81,6 @@ locals {
     "vsp_two" = {
       name               = "vsp_two"
       default_ip_address = "127.0.0.1"
-      vapp               = [{ "properties" = {} }]
       clone              = [{ "customize" = [{ "windows_options" = [{ "full_name" = "not_administrator" }] }] }]
     }
   }
