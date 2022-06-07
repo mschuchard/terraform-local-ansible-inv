@@ -23,7 +23,7 @@ locals {
   # aws
   # transform aws instances object into expected nested structure
   instances_aws_transform = {
-    for instance in var.instances_aws : lookup(instance.tags, "Name", instance.id) => merge(
+    for instance in var.instances_aws : lookup(try(instance.tags, {}), "Name", instance.id) => merge(
       { "ansible_host" = instance.private_ip },
       try(instance.tags, {}),
       can(instance.password_data) ? { "ansible_transport" = "winrm" } : {}
@@ -46,7 +46,7 @@ locals {
       { "ansible_host" = instance.network_interface.0.network_ip },
       try(instance.labels, {}),
       try(instance.metadata, {}),
-      { for tag in instance.tags : regexall("[-\\w]+", tag)[0] => regexall("[-\\w]+", tag)[1] if length(regexall("[-\\w]+", tag)) == 2 }
+      { for tag in try(instance.tags, {}) : regexall("[-\\w]+", tag)[0] => regexall("[-\\w]+", tag)[1] if length(regexall("[-\\w]+", tag)) == 2 }
     )
   }
 
