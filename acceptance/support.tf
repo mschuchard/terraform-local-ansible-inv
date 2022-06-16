@@ -46,8 +46,8 @@ locals {
     },
     "gcp_two" = {
       name              = "gcp_two"
-      labels            = { "my_label" = "label_value " }
-      metadata          = { "my_metadata" = "metadata_value " }
+      labels            = { "my_label" = "label_value" }
+      metadata          = { "my_metadata" = "metadata_value" }
       network_interface = [{ network_ip = "127.0.0.1" }]
     }
   }
