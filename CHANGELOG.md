@@ -1,4 +1,4 @@
-### 1.1.2 (Next)
+### 1.1.2
 - Update ini inventory template for recent group changes.
 - Safer handling of empty tag attributes in provider resources.
 - Add `labels` and `metadata` attributes to host vars for GCP.

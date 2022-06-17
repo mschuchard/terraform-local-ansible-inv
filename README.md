@@ -34,7 +34,8 @@ module "ansible_inv" {
     ]
   }
   group_vars = {
-    "my_group" = { "number" = 1 }
+    "my_group" = { "number" = 1 },
+    "all"      = { "terraform" =  true }
   }
 }
 ```
@@ -54,7 +55,7 @@ resource "google_compute_instance" "this" {
   ...
 }
 
-resource "azurerm_linux_virtual_machine" " this" {
+resource "azurerm_linux_virtual_machine" "this" {
   for_each = var.my_instances_azr
   ...
 }
@@ -97,6 +98,8 @@ name=myhost
 ansible_connection winrm
 foo:bar
 ```
+
+The labels and metadata will also propagate as key value pairs for the host variables.
 
 ### Azure
 
