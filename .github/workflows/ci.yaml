@@ -16,22 +16,26 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         tf_version: ['1.1.9']
+        python_version: ['3.9']
+        go_version: ['1.17']
     runs-on: ${{ matrix.os }}
     steps:
     - name: checkout
-      uses: actions/checkout@v2
-    - name: Set up Python
+      uses: actions/checkout@v3
+    - name: setup python
       uses: actions/setup-python@v3
       with:
-        python-version: '3.9'
-    - name:
+        python-version: ${{ matrix.python_version }}
+    - name: setup terraform
       uses: hashicorp/setup-terraform@v1
       with:
         terraform_version: ${{ matrix.tf_version }}
+    - name: setup go env
+      uses: actions/setup-go@v3
+      with:
+        go-version: ${{ matrix.go_version }}
     - name: initialize terraform module
       run: terraform init -backend=false -no-color
-    - name: initialize acceptance test
-      run: cd acceptance && terraform init -no-color
     - name: install ansible
       run: pip install ansible
     - name: validate terraform module
@@ -39,4 +43,4 @@ jobs:
     - name: verify proper formatting
       run: terraform fmt -diff -check -no-color
     - name: acceptance test terraform module
-      run: cd acceptance && terraform apply -input=false -no-color -auto-approve
+      run: cd acceptance && go test -v
