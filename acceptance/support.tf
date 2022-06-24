@@ -41,7 +41,7 @@ locals {
   instances_gcp = {
     "gcp_one" = {
       name              = "gcp_one"
-      tags              = ["Name=gcp_one", "foo=bar", "othertag", "not-host-var"]
+      tags              = ["foo=bar", "othertag", "not-host-var"]
       network_interface = [{ network_ip = "127.0.0.1" }]
     },
     "gcp_two" = {
