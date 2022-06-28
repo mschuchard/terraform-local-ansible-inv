@@ -8,7 +8,7 @@ import (
   "github.com/stretchr/testify/assert"
 )
 
-func TestTerraformHelloWorldExample(test *testing.T) {
+func TestTerraformLocalAnsibleInv(test *testing.T) {
   // construct tf options with path to acceptance test root module config dir
   terraformOptions := terraform.WithDefaultRetryableErrors(test, &terraform.Options{
     // of course it is the current dir
