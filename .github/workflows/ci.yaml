@@ -16,16 +16,11 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         tf_version: ['1.1.9']
-        python_version: ['3.9']
         go_version: ['1.18']
     runs-on: ${{ matrix.os }}
     steps:
     - name: checkout
       uses: actions/checkout@v3
-    - name: setup python
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ matrix.python_version }}
     - name: setup terraform
       uses: hashicorp/setup-terraform@v1
       with:
@@ -37,7 +32,7 @@ jobs:
     - name: initialize terraform module
       run: terraform init -backend=false -no-color
     - name: install ansible
-      run: pip install ansible
+      run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ansible
     - name: validate terraform module
       run: terraform validate -no-color
     - name: verify proper formatting
