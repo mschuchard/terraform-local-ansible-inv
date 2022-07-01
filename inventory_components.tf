@@ -3,12 +3,12 @@ locals {
   # transform instances input into expected nested structure and also construct instances groups
   instances_var_groups = {
     # iterate through map and construct map of group to string "hosts"
-    for group, instances in var.instances : group => {
+    for group, attrs in var.instances : group => {
       # construct map of string "hosts" to set of instance objects
       "hosts" = {
         # iterate through set of instance objects and transform into expected ansible inventory structure
         # structure is map of instance name to host variable values object
-        for instance in instances : instance.name =>
+        for instance in attrs.hosts : instance.name =>
         merge(
           { "ansible_host" = instance.ip },
           instance.vars

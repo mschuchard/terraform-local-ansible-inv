@@ -29,15 +29,16 @@ variable "inv_file_perms" {
 
 # hosts and host vars
 variable "instances" {
-  type = map(
-    set(
+  type = map(object({
+    children = set(string)
+    hosts = set(
       object({
         name = string
         ip   = string
         vars = map(string)
       })
     )
-  )
+  }))
   default     = {}
   description = "The instances and their attributes to populate the Ansible inventory file. The map keys will be used to construct Ansible inventory groups with the paired object values as the group host members."
 }
