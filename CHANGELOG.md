@@ -1,5 +1,6 @@
 ### (Next)
 - Update `instances` var to new type structure to support Ansible group children specification.
+- Support Ansible inventory group children for `instances` variable.
 
 ### 1.1.2
 - Update ini inventory template for recent group changes.

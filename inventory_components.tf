@@ -2,11 +2,13 @@ locals {
   # custom
   # transform instances input into expected nested structure and also construct instances groups
   instances_var_groups = {
-    # iterate through map and construct map of group to string "hosts"
+    # iterate through map and construct map of group to object of "hosts", "children", and "vars"
     for group, attrs in var.instances : group => {
-      # construct map of string "hosts" to set of instance objects
+      # reassign children set to same value in reconstructed map
+      "children" = attrs.children
+      # construct map of string "hosts" to map of instance objects
       "hosts" = {
-        # iterate through set of instance objects and transform into expected ansible inventory structure
+        # iterate through set of instance host objects and transform into expected ansible inventory structure
         # structure is map of instance name to host variable values object
         for instance in attrs.hosts : instance.name =>
         merge(
@@ -14,7 +16,7 @@ locals {
           instance.vars
         )
       },
-      # add vars for this group if they exist
+      # assign vars for this group if they exist
       # lookup function incompatible with map(any) type
       "vars" = try(var.group_vars[group], {})
     }

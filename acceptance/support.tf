@@ -19,7 +19,7 @@ locals {
       ]
     },
     "group_two" = {
-      children = []
+      children = ["group_one"]
       hosts = [
         {
           name = "var_two"
