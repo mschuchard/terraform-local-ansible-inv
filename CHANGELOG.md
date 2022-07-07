@@ -1,6 +1,7 @@
-### (Next)
+### 1.2.0 (Next)
 - Update `instances` var to new type structure to support Ansible group children specification.
 - Support Ansible inventory group children for `instances` variable.
+- Remove empty section rendering in INI format Ansible inventory.
 
 ### 1.1.2
 - Update ini inventory template for recent group changes.

@@ -1,11 +1,15 @@
+%{ if length(lookup(instances["all"], "hosts", [])) > 0 ~}
 [all]
 %{ for instance, attrs in instances["all"]["hosts"] ~}
 ${instance} %{ for var_key, var_value in attrs }${var_key}=${var_value} %{ endfor }
 %{ endfor }
+%{ endif ~}
+%{ if length(lookup(instances["all"], "vars", {})) > 0 ~}
 [all:vars]
 %{ for var_key, var_value in instances["all"]["vars"] ~}
 ${var_key}=${var_value}
 %{ endfor }
+%{ endif ~}
 %{ for group, group_attrs in instances["all"]["children"] ~}
 [${group}]
 %{ for host, host_attrs in group_attrs["hosts"] ~}
@@ -16,8 +20,10 @@ ${host}%{ for var_key, var_value in host_attrs } ${var_key}=${var_value}%{ endfo
 ${join("\n", group_attrs.children)}
 
 %{ endif ~}
+%{ if length(lookup(group_attrs, "vars", {})) > 0 ~}
 [${group}:vars]
 %{ for var_key, var_value in group_attrs["vars"] ~}
 ${var_key}=${var_value}
 %{ endfor }
+%{ endif ~}
 %{ endfor ~}
