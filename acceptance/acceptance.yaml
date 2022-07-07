@@ -37,6 +37,7 @@
       "vars":
         "ansible_connection": "local"
     "group_one":
+      "children": {}
       "hosts":
         "var_one":
           "ansible_host": "127.0.0.1"
@@ -46,6 +47,8 @@
         "ansible_connection": "local"
         "custom": "true"
     "group_two":
+      "children":
+        "group_one": ""
       "hosts":
         "var_two":
           "ansible_connection": "local"

@@ -15,9 +15,9 @@ ${var_key}=${var_value}
 %{ for host, host_attrs in group_attrs["hosts"] ~}
 ${host}%{ for var_key, var_value in host_attrs } ${var_key}=${var_value}%{ endfor }
 %{ endfor }
-%{ if length(lookup(group_attrs, "children", [])) > 0 ~}
+%{ if length(lookup(group_attrs, "children", {})) > 0 ~}
 [${group}:children]
-${join("\n", group_attrs.children)}
+${join("\n", keys(group_attrs.children))}
 
 %{ endif ~}
 %{ if length(lookup(group_attrs, "vars", {})) > 0 ~}

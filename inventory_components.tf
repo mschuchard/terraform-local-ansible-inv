@@ -4,8 +4,10 @@ locals {
   instances_var_groups = {
     # iterate through map and construct map of group to object of "hosts", "children", and "vars"
     for group, attrs in var.instances : group => {
-      # reassign children set to same value in reconstructed map
-      "children" = attrs.children
+      # reassign children set to analogous map value in reconstructed map
+      "children" = {
+        for child in attrs.children : child => ""
+      }
       # construct map of string "hosts" to map of instance objects
       "hosts" = {
         # iterate through set of instance host objects and transform into expected ansible inventory structure
