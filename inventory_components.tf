@@ -6,7 +6,7 @@ locals {
     for group, attrs in var.instances : group => {
       # reassign children set to analogous map value in reconstructed map
       "children" = {
-        for child in attrs.children : child => ""
+        for child in attrs.children : child => { "hosts" = {} }
       }
       # construct map of string "hosts" to map of instance objects
       "hosts" = {

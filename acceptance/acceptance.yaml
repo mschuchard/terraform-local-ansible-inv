@@ -48,7 +48,8 @@
         "custom": "true"
     "group_two":
       "children":
-        "group_one": ""
+        "group_one":
+          "hosts": {}
       "hosts":
         "var_two":
           "ansible_connection": "local"

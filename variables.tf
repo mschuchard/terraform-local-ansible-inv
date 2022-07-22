@@ -40,7 +40,7 @@ variable "instances" {
     )
   }))
   default     = {}
-  description = "The instances and their attributes to populate the Ansible inventory file. The map keys will be used to construct Ansible inventory groups with the paired object values as the group host members."
+  description = "The instances and their attributes to populate the Ansible inventory file. The map keys will be used to construct Ansible inventory groups with the paired 'hosts' object values as the group host members. The 'children' key is currently only functional for the INI format."
 }
 
 variable "instances_aws" {
