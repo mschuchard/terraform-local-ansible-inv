@@ -4,23 +4,35 @@ locals {
   instances_var_groups = {
     # iterate through map and construct map of group to object of "hosts", "children", and "vars"
     for group, attrs in var.instances : group => {
-      # reassign children set to analogous map value in reconstructed map
+      # iterate through children and assign as nested groups
       "children" = {
-        for child in attrs.children : child => { "hosts" = {} }
+        for child in attrs.children : child => {
+          # construct map of string "hosts" to map of instance objects
+          "hosts" = local.instances_var_hosts[child],
+          # assign vars for this child if they exist
+          # lookup function incompatible with map(any) type
+          "vars" = try(var.group_vars[child], {})
+        }
       }
       # construct map of string "hosts" to map of instance objects
-      "hosts" = {
-        # iterate through set of instance host objects and transform into expected ansible inventory structure
-        # structure is map of instance name to host variable values object
-        for instance in attrs.hosts : instance.name =>
-        merge(
-          { "ansible_host" = instance.ip },
-          instance.vars
-        )
-      },
+      "hosts" = local.instances_var_hosts[group],
       # assign vars for this group if they exist
       # lookup function incompatible with map(any) type
       "vars" = try(var.group_vars[group], {})
+    }
+  }
+
+  # transform nested hosts input into expected structure independently to differentiate between top level and children groups
+  instances_var_hosts = {
+    # assign hosts structure to group key for accurate access in overall custom structure above
+    for group, attrs in var.instances : group => {
+      # iterate through set of instance host objects and transform into expected ansible inventory structure
+      # structure is map of instance name to host variable values object
+      for instance in attrs.hosts : instance.name =>
+      merge(
+        { "ansible_host" = instance.ip },
+        instance.vars
+      )
     }
   }
 
