@@ -37,5 +37,5 @@ jobs:
       run: terraform validate -no-color
     - name: verify proper formatting
       run: terraform fmt -diff -check -no-color
-    #- name: acceptance test terraform module
-    #  run: cd acceptance && go get -t github.com/mschuchard/terraform-local-ansible-inv && go test -v
+    - name: acceptance test terraform module
+      run: cd acceptance && go get -t github.com/mschuchard/terraform-local-ansible-inv && go test -v
