@@ -13,7 +13,7 @@ variable "formats" {
 variable "prefix" {
   type        = string
   default     = ""
-  description = "A prefix to prepend to the name of the output inventory files. For example: the INI inventory will be named '<prefix>inventory.ini'."
+  description = "A prefix to prepend to the name of the output inventory files. For example: the INI inventory will be named 'PREFIXinventory.ini'."
 }
 
 variable "inv_file_perms" {

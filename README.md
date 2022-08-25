@@ -9,7 +9,7 @@ Typically you would want to map the Terraform outputs and/or exported attributes
 # example declaration
 module "ansible_inv" {
   source  = "mschuchard/ansible-inv/local"
-  version = "~> 1.1.0"
+  version = "~> 1.2.0"
 
   formats   = ["yaml"]
   instances = {
@@ -150,7 +150,7 @@ No modules.
 | <a name="input_instances_gcp"></a> [instances\_gcp](#input\_instances\_gcp) | The 'google\_compute\_instance.this' map of objects comprising multiple instances to populate the Ansible inventory file. | `any` | `{}` | no |
 | <a name="input_instances_vsp"></a> [instances\_vsp](#input\_instances\_vsp) | The 'vsphere\_virtual\_machine.this' map of objects comprising multiple instances to populate the Ansible inventory file. | `any` | `{}` | no |
 | <a name="input_inv_file_perms"></a> [inv\_file\_perms](#input\_inv\_file\_perms) | The file permissions mode for the output Ansible inventory file(s). | `string` | `"0644"` | no |
-| <a name="input_prefix"></a> [prefix](#input\_prefix) | A prefix to prepend to the name of the output inventory files. For example: the INI inventory will be named '<prefix>inventory.ini'. | `string` | `""` | no |
+| <a name="input_prefix"></a> [prefix](#input\_prefix) | A prefix to prepend to the name of the output inventory files. For example: the INI inventory will be named 'PREFIXinventory.ini'. | `string` | `""` | no |
 
 ## Outputs
 
