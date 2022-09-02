@@ -100,6 +100,14 @@ locals {
     "vsp"       = { "ansible_connection" = "local" },
     "all"       = { "terraform" = 5 }
   }
+
+  # mock extra provider instance hostvars
+  extra_hostvars = {
+    aws = { "aws_one" = { "extra" = "var" } }
+    gcp = { "gcp_one" = { "extra" = "var" } }
+    azr = { "azr_one" = { "extra" = "var" } }
+    vsp = { "vsp_one" = { "extra" = "var" } }
+  }
 }
 
 # null provider specification

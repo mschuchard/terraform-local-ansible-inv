@@ -2,13 +2,14 @@
 module "ansible_inv" {
   source = "../"
 
-  formats       = local.formats
-  instances     = local.instances_var
-  instances_aws = local.instances_aws
-  instances_gcp = local.instances_gcp
-  instances_azr = local.instances_azr
-  instances_vsp = local.instances_vsp
-  group_vars    = local.group_vars
+  formats        = local.formats
+  instances      = local.instances_var
+  instances_aws  = local.instances_aws
+  instances_gcp  = local.instances_gcp
+  instances_azr  = local.instances_azr
+  instances_vsp  = local.instances_vsp
+  group_vars     = local.group_vars
+  extra_hostvars = local.extra_hostvars
 }
 
 # validate generated inventory files with ad hoc ansible
