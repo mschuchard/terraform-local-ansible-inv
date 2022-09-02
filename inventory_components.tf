@@ -42,7 +42,8 @@ locals {
     for instance in var.instances_aws : lookup(try(instance.tags, {}), "Name", instance.id) => merge(
       { "ansible_host" = instance.private_ip },
       try(instance.tags, {}),
-      can(instance.password_data) ? { "ansible_transport" = "winrm" } : {}
+      can(instance.password_data) ? { "ansible_transport" = "winrm" } : {},
+      try(var.extra_hostvars.aws[lookup(try(instance.tags, {}), "Name", instance.id)], {})
     )
   }
 
@@ -62,7 +63,8 @@ locals {
       { "ansible_host" = instance.network_interface.0.network_ip },
       try(instance.labels, {}),
       try(instance.metadata, {}),
-      { for tag in try(instance.tags, {}) : regexall("[-\\w]+", tag)[0] => regexall("[-\\w]+", tag)[1] if length(regexall("[-\\w]+", tag)) == 2 }
+      { for tag in try(instance.tags, {}) : regexall("[-\\w]+", tag)[0] => regexall("[-\\w]+", tag)[1] if length(regexall("[-\\w]+", tag)) == 2 },
+      try(var.extra_hostvars.gcp[instance.name], {})
     )
   }
 
@@ -82,7 +84,8 @@ locals {
       { "ansible_host" = instance.private_ip_address },
       { "ansible_become_user" = try(instance.admin_ssh_key.0.username, instance.admin_username) },
       try(instance.tags, {}),
-      can(regex("Windows", instance.source_image_reference.0.offer)) ? { "ansible_transport" = "winrm" } : {}
+      can(regex("Windows", instance.source_image_reference.0.offer)) ? { "ansible_transport" = "winrm" } : {},
+      try(var.extra_hostvars.azr[instance.name], {})
     )
   }
 
@@ -102,7 +105,8 @@ locals {
       { "ansible_host" = instance.default_ip_address },
       try({ "ansible_become_user" = instance.clone.0.customize.0.windows_options.0.full_name }, {}),
       try(instance.vapp[0].properties, {}),
-      can(instance.clone.0.customize.0.windows_options) ? { "ansible_transport" = "winrm" } : {}
+      can(instance.clone.0.customize.0.windows_options) ? { "ansible_transport" = "winrm" } : {},
+      try(var.extra_hostvars.vsp[instance.name], {})
     )
   }
 
