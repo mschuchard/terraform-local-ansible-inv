@@ -41,7 +41,7 @@ module "ansible_inv" {
   }
   group_vars = {
     "my_group" = { "number" = 1 },
-    "all"      = { "terraform" =  true }
+    "all"      = { "terraform" = true }
   }
 }
 ```
@@ -82,7 +82,7 @@ module "ansible_inv" {
   instances_vsp = vsphere_virtual_machine.this
   group_vars    = {
     "aws" = { "platform" = "aws" },
-    "vsp" = { "on_prem" =  true }
+    "vsp" = { "on_prem" = true }
   }
 }
 ```
