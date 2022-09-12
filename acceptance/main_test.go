@@ -22,8 +22,8 @@ func TestTerraformLocalAnsibleInv(test *testing.T) {
   terraform.InitAndApply(test, terraformOptions)
 
   // validate files outputs
-  invFilesOutput := terraform.Output(test, terraformOptions, "inventory_files")
-  assert.Equal(test, "[./inventory.ini ./inventory.json ./inventory.yaml]", invFilesOutput)
+  invFilesOutput := terraform.OutputList(test, terraformOptions, "inventory_files")
+  assert.Equal(test, []string{"./inventory.ini", "./inventory.json", "./inventory.yaml"}, invFilesOutput)
 
   // validate inventory outputs
   for _, format := range []string{"ini", "yaml", "json"} {
