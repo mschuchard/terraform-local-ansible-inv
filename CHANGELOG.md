@@ -1,5 +1,6 @@
 ### 1.2.1 (Next)
 - Add new variable for and support appending to host variables for provider instances.
+- Improve assurance of output blocks' accuracy.
 
 ### 1.2.0
 - Update `instances` var to new type structure to support Ansible group children specification.
