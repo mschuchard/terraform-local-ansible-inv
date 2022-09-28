@@ -7,7 +7,7 @@ defaults: &defaults
   - image: cytopia/ansible:latest
   environment:
     TF_IN_AUTOMATION: true
-    TF_VERSION: '1.1.9'
+    TF_VERSION: '1.2.9'
   resource_class: medium
 
 default_tf_pre_steps: &default_tf_pre_steps

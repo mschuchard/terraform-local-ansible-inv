@@ -15,8 +15,8 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        tf_version: ['1.1.9']
-        go_version: ['1.18']
+        tf_version: ['1.2.9']
+    #    go_version: ['1.18']
     runs-on: ${{ matrix.os }}
     steps:
     - name: checkout
@@ -25,10 +25,10 @@ jobs:
       uses: hashicorp/setup-terraform@v1
       with:
         terraform_version: ${{ matrix.tf_version }}
-    - name: setup go env
-      uses: actions/setup-go@v3
-      with:
-        go-version: ${{ matrix.go_version }}
+    #- name: setup go env
+    #  uses: actions/setup-go@v3
+    #  with:
+    #    go-version: ${{ matrix.go_version }}
     - name: initialize terraform module
       run: terraform init -backend=false -no-color
     - name: install ansible
@@ -38,4 +38,7 @@ jobs:
     - name: verify proper formatting
       run: terraform fmt -diff -check -no-color
     - name: acceptance test terraform module
-      run: cd acceptance && go get -t github.com/mschuchard/terraform-local-ansible-inv && go test -v
+      run: cd acceptance && ../terraform apply -input=false -no-color -auto-approve
+    # TODO: deactivated temporarily because GH actions causing issue with JSON parsing in terratest go code
+    #- name: acceptance test terraform module
+    #  run: cd acceptance && go get -t github.com/mschuchard/terraform-local-ansible-inv && go test -v
