@@ -41,7 +41,7 @@ locals {
   instances_aws_transform = {
     for instance in var.instances_aws : lookup(try(instance.tags, {}), "Name", instance.id) => merge(
       { "ansible_host" = instance.private_ip },
-      try(instance.tags, {}),
+      try({ for key, value in instance.tags : key => value if key != "Name" }, {}),
       can(instance.password_data) ? { "ansible_transport" = "winrm" } : {},
       try(var.extra_hostvars.aws[lookup(try(instance.tags, {}), "Name", instance.id)], {})
     )

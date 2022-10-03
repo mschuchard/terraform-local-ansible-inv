@@ -4,7 +4,6 @@
     "aws":
       "hosts":
         "aws_one":
-          "Name": "aws_one"
           "ansible_host": "127.0.0.1"
           "baz": "bat"
           "extra": "var"
