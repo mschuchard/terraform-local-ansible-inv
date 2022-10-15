@@ -1,4 +1,4 @@
-### 1.2.1 (Next)
+### 1.2.1
 - Add new variable for and support appending to host variables for provider instances.
 - Improve assurance of output blocks' accuracy.
 - Ignore redundant `Name` host variable for AWS instances.

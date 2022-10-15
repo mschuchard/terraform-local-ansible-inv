@@ -35,6 +35,8 @@ jobs:
     #    go-version: ${{ matrix.go_version }}
     - name: initialize terraform module
       run: terraform init -backend=false -no-color
+    - name: initialize acceptance test
+      run: cd acceptance && terraform init -no-color
     - name: install ansible
       run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ansible
     - name: validate terraform module

@@ -84,6 +84,16 @@ module "ansible_inv" {
     "aws" = { "platform" = "aws" },
     "vsp" = { "on_prem" = true }
   }
+  extra_hostvars = {
+    aws = {
+      "my_aws_instance" = { "environment" = "production" }
+    }
+    gcp = {}
+    azr = {
+      "my_azr_instance" = { "datacenter" = "east" }
+    }
+    vsp = {}
+  }
 }
 ```
 
@@ -142,6 +152,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_extra_hostvars"></a> [extra\_hostvars](#input\_extra\_hostvars) | An object comprising additional host variables to append to directly mapped provider instances. The format of the maps for each provider platform key should be key=HOST value={VARNAME = VARVALUE}. | <pre>object({<br>    aws = map(map(string))<br>    gcp = map(map(string))<br>    azr = map(map(string))<br>    vsp = map(map(string))<br>  })</pre> | <pre>{<br>  "aws": {},<br>  "azr": {},<br>  "gcp": {},<br>  "vsp": {}<br>}</pre> | no |
 | <a name="input_formats"></a> [formats](#input\_formats) | The set of formats to output the Ansible inventory. Supported formats are: 'ini', 'yaml', and 'json'. | `set(string)` | `[]` | no |
 | <a name="input_group_vars"></a> [group\_vars](#input\_group\_vars) | The map of Ansible group variables. Each key in the map is the name of a group (this includes support for the 'all' group), and each value is the object representing the pairs of group variable names and values. | `map(any)` | `{}` | no |
 | <a name="input_instances"></a> [instances](#input\_instances) | The instances and their attributes to populate the Ansible inventory file. The map keys will be used to construct Ansible inventory groups with the paired 'hosts' object values as the group host members. | <pre>map(object({<br>    children = set(string)<br>    hosts = set(<br>      object({<br>        name = string<br>        ip   = string<br>        vars = map(string)<br>      })<br>    )<br>  }))</pre> | `{}` | no |
