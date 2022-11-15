@@ -4,7 +4,7 @@ version: 2.1
 defaults: &defaults
   working_directory: /tmp/project
   docker:
-  - image: cytopia/ansible:latest
+  - image: matthewschuchard/terraform-ansible
   environment:
     TF_IN_AUTOMATION: true
     TF_VERSION: '1.2.9'
@@ -24,17 +24,11 @@ jobs:
         keys:
         - "v1-{{ .Environment.CIRCLE_PROJECT_REPONAME }}-{{ checksum \"provider.tf\" }}"
     - run:
-        name: install curl
-        command: apk add --no-cache --update curl
-    - run:
-        name: install terraform
-        command: curl -o terraform.zip "https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip" && unzip terraform.zip
-    - run:
         name: initialize terraform module
-        command: ./terraform init -backend=false -no-color
+        command: terraform init -backend=false -no-color
     - run:
         name: initialize acceptance test
-        command: cd acceptance && ../terraform init -no-color
+        command: cd acceptance && terraform init -no-color
     - save_cache:
         paths:
         - .terraform
@@ -49,21 +43,21 @@ jobs:
     steps:
     - run:
         name: validate terraform module
-        command: ./terraform validate -no-color
+        command: terraform validate -no-color
 
   format_check:
     <<: *defaults
     steps:
     - run:
         name: verify proper formatting
-        command: ./terraform fmt -diff -check -no-color
+        command: terraform fmt -diff -check -no-color
 
   acceptance_test:
     <<: *defaults
     steps:
     - run:
         name: acceptance test terraform module
-        command: cd acceptance && ../terraform apply -input=false -no-color -auto-approve
+        command: cd acceptance && terraform apply -input=false -no-color -auto-approve
 
 workflows:
   version: 2.1
