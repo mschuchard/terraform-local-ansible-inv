@@ -5,11 +5,15 @@ on:
   push:
     branches: [master]
     paths:
-    - '**/*.tf'
+    - '*.tf'
+    - 'templates'
+    - 'acceptance'
   pull_request:
     branches: [master]
     paths:
-    - '**/*.tf'
+    - '*.tf'
+    - 'templates'
+    - 'acceptance'
 
 env:
   TF_IN_AUTOMATION: 'true'

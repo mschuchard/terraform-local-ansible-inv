@@ -3,8 +3,8 @@ module github.com/mschuchard/terraform-local-ansible-inv
 go 1.18
 
 require (
-	github.com/gruntwork-io/terratest v0.40.20
-	github.com/stretchr/testify v1.7.5
+	github.com/gruntwork-io/terratest v0.41.3
+	github.com/stretchr/testify v1.8.1
 )
 
 require (

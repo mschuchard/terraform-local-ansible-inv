@@ -32,6 +32,7 @@ jobs:
     - save_cache:
         paths:
         - .terraform
+        - acceptance/.terraform
         key: "v1-{{ .Environment.CIRCLE_PROJECT_REPONAME }}-{{ checksum \"versions.tf\" }}"
     - persist_to_workspace:
         root: /tmp
