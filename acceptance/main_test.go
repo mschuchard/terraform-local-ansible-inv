@@ -1,7 +1,7 @@
 package test
 
 import (
-  "io/ioutil"
+  "os"
   "testing"
 
   "github.com/gruntwork-io/terratest/modules/terraform"
@@ -25,10 +25,16 @@ func TestTerraformLocalAnsibleInv(test *testing.T) {
   invFilesOutput := terraform.OutputList(test, terraformOptions, "inventory_files")
   assert.Equal(test, []string{"./inventory.ini", "./inventory.json", "./inventory.yaml"}, invFilesOutput)
 
-  // validate inventory outputs
+  // validate inventory content outputs and then file content directly
   for _, format := range []string{"ini", "yaml", "json"} {
+    acceptance, _ := os.ReadFile("acceptance." + format)
+
+    // inventory outputs
     output := terraform.Output(test, terraformOptions, "inventory_" + format)
-    acceptance, _ := ioutil.ReadFile("acceptance." + format)
     assert.Equal(test, string(acceptance), output)
+
+    // inventory file content
+    inventoryFileContent, _ := os.ReadFile("inventory." + format)
+    assert.Equal(test, string(acceptance), string(inventoryFileContent))
   }
 }
