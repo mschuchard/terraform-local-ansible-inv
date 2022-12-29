@@ -3,16 +3,24 @@ package test
 import (
   "os"
   "testing"
+  "runtime"
+  "path/filepath"
 
   "github.com/gruntwork-io/terratest/modules/terraform"
   "github.com/stretchr/testify/assert"
 )
 
 func TestTerraformLocalAnsibleInv(test *testing.T) {
+  // determine config directory path for tf command positional arg
+  _, file, _, ok := runtime.Caller(0)
+  if !ok {
+    test.Errorf("Unable to determine the current file")
+  }
+  directory := filepath.Dir(file)
+
   // construct tf options with path to acceptance test root module config dir
   terraformOptions := terraform.WithDefaultRetryableErrors(test, &terraform.Options{
-    // of course it is the current dir
-    TerraformDir: ".",
+    TerraformDir: directory,
   })
 
   // defer destroy
