@@ -23,16 +23,18 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-22.04]
-        tf_version: ['1.2.9']
+        container: ['matthewschuchard/terraform-ansible']
+    #    tf_version: ['1.2.9']
     #    go_version: ['1.18']
     runs-on: ${{ matrix.os }}
+    container: ${{ matrix.container }}
     steps:
     - name: checkout
       uses: actions/checkout@v3
-    - name: setup terraform
-      uses: hashicorp/setup-terraform@v1
-      with:
-        terraform_version: ${{ matrix.tf_version }}
+    #- name: setup terraform
+    #  uses: hashicorp/setup-terraform@v1
+    #  with:
+    #    terraform_version: ${{ matrix.tf_version }}
     #- name: setup go env
     #  uses: actions/setup-go@v3
     #  with:
@@ -41,8 +43,8 @@ jobs:
       run: terraform init -backend=false -no-color
     - name: initialize acceptance test
       run: cd acceptance && terraform init -no-color
-    - name: install ansible
-      run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ansible
+    #- name: install ansible
+    #  run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ansible
     - name: validate terraform module
       run: terraform validate -no-color
     - name: verify proper formatting
