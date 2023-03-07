@@ -26,8 +26,8 @@ func TestTerraformLocalAnsibleInv(test *testing.T) {
   // defer destroy
   defer terraform.Destroy(test, terraformOptions)
 
-  // invoke acceptance test execution
   terraform.InitAndApply(test, terraformOptions)
+  // invoke acceptance test execution
 
   // validate files outputs
   invFilesOutput := terraform.OutputList(test, terraformOptions, "inventory_files")
@@ -35,14 +35,21 @@ func TestTerraformLocalAnsibleInv(test *testing.T) {
 
   // validate inventory content outputs and then file content directly
   for _, format := range []string{"ini", "yaml", "json"} {
-    acceptance, _ := os.ReadFile("acceptance." + format)
+    // assign expected acceptance test inventory content from fixture
+    acceptance, err := os.ReadFile("acceptance." + format)
+    if err != nil {
+      test.Errorf("Expected acceptance test content fixture file missing for %s format", format)
+    }
 
     // inventory outputs
     output := terraform.Output(test, terraformOptions, "inventory_" + format)
     assert.Equal(test, string(acceptance), output)
 
     // inventory file content
-    inventoryFileContent, _ := os.ReadFile("inventory." + format)
+    inventoryFileContent, err := os.ReadFile("inventory." + format)
     assert.Equal(test, string(acceptance), string(inventoryFileContent))
+    if err != nil {
+      test.Errorf("Inventory file was not produced for %s format", format)
+    }
   }
 }
