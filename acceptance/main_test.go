@@ -26,8 +26,8 @@ func TestTerraformLocalAnsibleInv(test *testing.T) {
   // defer destroy
   defer terraform.Destroy(test, terraformOptions)
 
-  terraform.InitAndApply(test, terraformOptions)
   // invoke acceptance test execution
+  terraform.InitAndApply(test, terraformOptions)
 
   // validate files outputs
   invFilesOutput := terraform.OutputList(test, terraformOptions, "inventory_files")
