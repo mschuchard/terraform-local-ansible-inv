@@ -109,13 +109,3 @@ locals {
     vsp = { "vsp_one" = { "extra" = "var" } }
   }
 }
-
-# null provider specification
-terraform {
-  required_providers {
-    null = {
-      source  = "hashicorp/null"
-      version = "~> 3.0"
-    }
-  }
-}

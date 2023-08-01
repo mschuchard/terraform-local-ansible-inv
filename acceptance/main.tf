@@ -13,10 +13,10 @@ module "ansible_inv" {
 }
 
 # validate generated inventory files with ad hoc ansible
-resource "null_resource" "inventory_validation" {
+resource "terraform_data" "inventory_validation" {
   for_each = local.formats
 
-  triggers = {
+  triggers_replace = {
     ini_inventory  = module.ansible_inv.ini,
     yaml_inventory = module.ansible_inv.yaml,
     json_inventory = module.ansible_inv.json
