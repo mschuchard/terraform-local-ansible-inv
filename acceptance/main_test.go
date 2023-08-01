@@ -38,7 +38,8 @@ func TestTerraformLocalAnsibleInv(test *testing.T) {
 		// assign expected acceptance test inventory content from fixture
 		acceptance, err := os.ReadFile("acceptance." + format)
 		if err != nil {
-			test.Errorf("Expected acceptance test content fixture file missing for %s format", format)
+			test.Errorf("Issue with acceptance test content fixture file for %s format", format)
+			test.Error(err)
 		}
 
 		// inventory outputs
@@ -47,9 +48,10 @@ func TestTerraformLocalAnsibleInv(test *testing.T) {
 
 		// inventory file content
 		inventoryFileContent, err := os.ReadFile("inventory." + format)
-		assert.Equal(test, string(acceptance), string(inventoryFileContent))
 		if err != nil {
-			test.Errorf("Inventory file was not produced for %s format", format)
+			test.Errorf("Issue with reading inventory file for %s format", format)
+			test.Error(err)
 		}
+		assert.Equal(test, string(acceptance), string(inventoryFileContent))
 	}
 }
