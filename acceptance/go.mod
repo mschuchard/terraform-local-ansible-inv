@@ -1,9 +1,9 @@
 module github.com/mschuchard/terraform-local-ansible-inv
 
-go 1.19
+go 1.20
 
 require (
-	github.com/gruntwork-io/terratest v0.43.11
+	github.com/gruntwork-io/terratest v0.43.13
 	github.com/stretchr/testify v1.8.4
 )
 

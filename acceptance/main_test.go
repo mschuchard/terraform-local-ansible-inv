@@ -14,14 +14,12 @@ func TestTerraformLocalAnsibleInv(test *testing.T) {
 	// determine config directory path for tf command positional arg
 	_, file, _, ok := runtime.Caller(0)
 	if !ok {
-		test.Errorf("Unable to determine the current file")
+		test.Error("unable to determine the current file")
 	}
 	directory := filepath.Dir(file)
 
 	// construct tf options with path to acceptance test root module config dir
-	terraformOptions := terraform.WithDefaultRetryableErrors(test, &terraform.Options{
-		TerraformDir: directory,
-	})
+	terraformOptions := terraform.WithDefaultRetryableErrors(test, &terraform.Options{TerraformDir: directory})
 
 	// defer destroy
 	defer terraform.Destroy(test, terraformOptions)
@@ -38,7 +36,7 @@ func TestTerraformLocalAnsibleInv(test *testing.T) {
 		// assign expected acceptance test inventory content from fixture
 		acceptance, err := os.ReadFile("acceptance." + format)
 		if err != nil {
-			test.Errorf("Issue with acceptance test content fixture file for %s format", format)
+			test.Errorf("issue with acceptance test content fixture file for %s format", format)
 			test.Error(err)
 		}
 
@@ -49,7 +47,7 @@ func TestTerraformLocalAnsibleInv(test *testing.T) {
 		// inventory file content
 		inventoryFileContent, err := os.ReadFile("inventory." + format)
 		if err != nil {
-			test.Errorf("Issue with reading inventory file for %s format", format)
+			test.Errorf("issue with reading inventory file for %s format", format)
 			test.Error(err)
 		}
 		assert.Equal(test, string(acceptance), string(inventoryFileContent))
