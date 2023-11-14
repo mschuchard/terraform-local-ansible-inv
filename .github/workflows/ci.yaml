@@ -33,8 +33,6 @@ jobs:
       run: terraform init -backend=false -no-color
     - name: initialize acceptance test
       run: cd acceptance && terraform init -no-color
-    #- name: install ansible
-    #  run: apk add --no-cache --update ansible
     - name: validate terraform module
       run: terraform validate -no-color
     - name: verify proper formatting
