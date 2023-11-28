@@ -2,7 +2,7 @@
 variable "formats" {
   type        = set(string)
   default     = []
-  description = "The set of formats to output the Ansible inventory. Supported formats are: 'ini', 'yaml', and 'json'."
+  description = "The set of formats in which to output the Ansible inventory. Supported formats are: 'ini', 'yaml', and 'json'."
 
   validation {
     condition     = length(setunion(["ini", "yaml", "json"], var.formats)) <= 3
@@ -13,13 +13,13 @@ variable "formats" {
 variable "prefix" {
   type        = string
   default     = ""
-  description = "A prefix to prepend to the name of the output inventory files. For example: the INI inventory will be named 'PREFIXinventory.ini'."
+  description = "A prefix to prepend to the name of the output inventory files. For example: the INI inventory will be named 'PREFIXinventory.ini'. This is primarily useful for unique naming schemes between module declarations."
 }
 
 variable "inv_file_perms" {
   type        = string
   default     = "0644"
-  description = "The file permissions mode for the output Ansible inventory file(s)."
+  description = "The file permissions octal mode for the output Ansible inventory file(s)."
 
   validation {
     condition     = can(regex("^\\d{4}$", var.inv_file_perms))
@@ -40,7 +40,7 @@ variable "instances" {
     )
   }))
   default     = {}
-  description = "The instances and their attributes to populate the Ansible inventory file. The map keys will be used to construct Ansible inventory groups with the paired 'hosts' object values as the group host members."
+  description = "The instances and their attributes used to populate the Ansible inventory file. The map keys will be used to construct Ansible inventory groups with the paired 'hosts' object values as the group host members."
 }
 
 variable "instances_aws" {
@@ -88,5 +88,5 @@ variable "extra_hostvars" {
     azr = {}
     vsp = {}
   }
-  description = "An object comprising additional host variables to append to directly mapped provider instances. The format of the maps for each provider platform key should be key=HOST value={VARNAME = VARVALUE}."
+  description = "An object comprising additional host variables to append to the variables automatically derived from the directly mapped provider instances' attributes. The format of the maps for each provider platform key should be key=HOST value={VARNAME = VARVALUE}."
 }
