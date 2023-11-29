@@ -1,5 +1,6 @@
 ### 1.3.0 (Next)
 - Increaase minimum TF version from 0.13 to 0.15.
+- Add `manage_file` variable.
 
 ### 1.2.1
 - Add new variable for and support appending to host variables for provider instances.

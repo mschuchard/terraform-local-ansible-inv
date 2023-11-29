@@ -27,6 +27,12 @@ variable "inv_file_perms" {
   }
 }
 
+variable "manage_file" {
+  type        = bool
+  default     = true
+  description = "Whether or not to manage a local file per inventory format with the content of each inventory. If this is set to false, then the inventory content will only be available from the Terraform outputs."
+}
+
 # hosts and host vars
 variable "instances" {
   type = map(object({

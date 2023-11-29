@@ -1,5 +1,5 @@
 resource "local_file" "ansible_inventory" {
-  for_each = var.formats
+  for_each = var.manage_file ? var.formats : []
 
   content = local.inv_content[each.value]
   # prefix inventory with name of first instance for now
