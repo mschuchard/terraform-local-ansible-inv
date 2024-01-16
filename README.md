@@ -129,14 +129,12 @@ The `ansible_host` will be set to the `default_ip_address` attribute (the primar
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.15 |
 | <a name="requirement_local"></a> [local](#requirement\_local) | ~> 2.0 |
 
 ## Providers
 
-| Name | Version |
-|------|---------|
-| <a name="provider_local"></a> [local](#provider\_local) | 2.2.2 |
+None
 
 ## Modules
 
@@ -152,16 +150,17 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_extra_hostvars"></a> [extra\_hostvars](#input\_extra\_hostvars) | An object comprising additional host variables to append to directly mapped provider instances. The format of the maps for each provider platform key should be key=HOST value={VARNAME = VARVALUE}. | <pre>object({<br>    aws = map(map(string))<br>    gcp = map(map(string))<br>    azr = map(map(string))<br>    vsp = map(map(string))<br>  })</pre> | <pre>{<br>  "aws": {},<br>  "azr": {},<br>  "gcp": {},<br>  "vsp": {}<br>}</pre> | no |
-| <a name="input_formats"></a> [formats](#input\_formats) | The set of formats to output the Ansible inventory. Supported formats are: 'ini', 'yaml', and 'json'. | `set(string)` | `[]` | no |
+| <a name="input_extra_hostvars"></a> [extra\_hostvars](#input\_extra\_hostvars) | An object comprising additional host variables to append to the variables automatically derived from the directly mapped provider instances' attributes. The format of the maps for each provider platform key should be key=HOST value={VARNAME = VARVALUE}. | <pre>object({<br>    aws = map(map(string))<br>    gcp = map(map(string))<br>    azr = map(map(string))<br>    vsp = map(map(string))<br>  })</pre> | <pre>{<br>  "aws": {},<br>  "azr": {},<br>  "gcp": {},<br>  "vsp": {}<br>}</pre> | no |
+| <a name="input_formats"></a> [formats](#input\_formats) | The set of formats in which to output the Ansible inventory. Supported formats are: 'ini', 'yaml', and 'json'. | `set(string)` | `[]` | no |
 | <a name="input_group_vars"></a> [group\_vars](#input\_group\_vars) | The map of Ansible group variables. Each key in the map is the name of a group (this includes support for the 'all' group), and each value is the object representing the pairs of group variable names and values. | `map(any)` | `{}` | no |
-| <a name="input_instances"></a> [instances](#input\_instances) | The instances and their attributes to populate the Ansible inventory file. The map keys will be used to construct Ansible inventory groups with the paired 'hosts' object values as the group host members. | <pre>map(object({<br>    children = set(string)<br>    hosts = set(<br>      object({<br>        name = string<br>        ip   = string<br>        vars = map(string)<br>      })<br>    )<br>  }))</pre> | `{}` | no |
+| <a name="input_instances"></a> [instances](#input\_instances) | The instances and their attributes used to populate the Ansible inventory file. The map keys will be used to construct Ansible inventory groups with the paired 'hosts' object values as the group host members. | <pre>map(object({<br>    children = set(string)<br>    hosts = set(<br>      object({<br>        name = string<br>        ip   = string<br>        vars = map(string)<br>      })<br>    )<br>  }))</pre> | `{}` | no |
 | <a name="input_instances_aws"></a> [instances\_aws](#input\_instances\_aws) | The 'aws\_instance.this' map of objects comprising multiple instances to populate the Ansible inventory file. | `any` | `{}` | no |
 | <a name="input_instances_azr"></a> [instances\_azr](#input\_instances\_azr) | The 'azurerm\_linux\|windows\_virtual\_machine.this' map of objects comprising multiple instances to populate the Ansible inventory file. | `any` | `{}` | no |
 | <a name="input_instances_gcp"></a> [instances\_gcp](#input\_instances\_gcp) | The 'google\_compute\_instance.this' map of objects comprising multiple instances to populate the Ansible inventory file. | `any` | `{}` | no |
 | <a name="input_instances_vsp"></a> [instances\_vsp](#input\_instances\_vsp) | The 'vsphere\_virtual\_machine.this' map of objects comprising multiple instances to populate the Ansible inventory file. | `any` | `{}` | no |
-| <a name="input_inv_file_perms"></a> [inv\_file\_perms](#input\_inv\_file\_perms) | The file permissions mode for the output Ansible inventory file(s). | `string` | `"0644"` | no |
-| <a name="input_prefix"></a> [prefix](#input\_prefix) | A prefix to prepend to the name of the output inventory files. For example: the INI inventory will be named 'PREFIXinventory.ini'. | `string` | `""` | no |
+| <a name="input_inv_file_perms"></a> [inv\_file\_perms](#input\_inv\_file\_perms) | The file permissions octal mode for the output Ansible inventory file(s). | `string` | `"0644"` | no |
+| <a name="input_manage_file"></a> [manage\_file](#input\_manage\_file) | Whether or not to manage a local file per inventory format with the content of each inventory. If this is set to false, then the inventory content will only be available from the Terraform outputs. | `bool` | `true` | no |
+| <a name="input_prefix"></a> [prefix](#input\_prefix) | A prefix to prepend to the name of the output inventory files. For example: the INI inventory will be named 'PREFIXinventory.ini'. This is primarily useful for unique naming schemes between module declarations. | `string` | `""` | no |
 
 ## Outputs
 
