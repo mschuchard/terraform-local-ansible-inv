@@ -15,6 +15,7 @@ func TestTerraformLocalAnsibleInv(test *testing.T) {
 	_, file, _, ok := runtime.Caller(0)
 	if !ok {
 		test.Error("unable to determine the current file")
+		return
 	}
 	directory := filepath.Dir(file)
 
@@ -38,6 +39,7 @@ func TestTerraformLocalAnsibleInv(test *testing.T) {
 		if err != nil {
 			test.Errorf("issue with acceptance test content fixture file for %s format", format)
 			test.Error(err)
+			continue
 		}
 
 		// inventory outputs
@@ -49,6 +51,7 @@ func TestTerraformLocalAnsibleInv(test *testing.T) {
 		if err != nil {
 			test.Errorf("issue with reading inventory file for %s format", format)
 			test.Error(err)
+			continue
 		}
 		assert.Equal(test, string(acceptance), string(inventoryFileContent))
 	}
