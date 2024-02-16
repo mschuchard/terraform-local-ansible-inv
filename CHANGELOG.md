@@ -1,5 +1,5 @@
 ### 1.3.0 (Next)
-- Increaase minimum TF version from 0.13 to 0.15.
+- Increaase minimum TF version from 0.13 to 1.0.
 - Add `manage_file` variable.
 
 ### 1.2.1

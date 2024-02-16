@@ -1,6 +1,6 @@
 module github.com/mschuchard/terraform-local-ansible-inv
 
-go 1.20
+go 1.21
 
 require (
 	github.com/gruntwork-io/terratest v0.46.11
