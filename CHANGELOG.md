@@ -1,3 +1,6 @@
+### 1.3.1
+- Do not add empty platform groups to the inventory.
+
 ### 1.3.0
 - Increaase minimum TF version from 0.13 to 1.0.
 - Add `manage_file` variable.
