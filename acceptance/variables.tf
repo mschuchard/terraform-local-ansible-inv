@@ -1,8 +1,11 @@
-# local vars for dry
-locals {
-  formats = toset(["ini", "yaml", "json"])
+# vars for dynamic variation of parameters
+variable "formats" {
+  type    = set(any)
+  default = ["ini", "yaml", "json"]
+}
 
-  instances_var = {
+variable "instances_var" {
+  default = {
     "group_one" = {
       children = []
       hosts = [
@@ -29,9 +32,11 @@ locals {
       ]
     }
   }
+}
 
-  # mock aws instances
-  instances_aws = {
+# mock aws instances
+variable "instances_aws" {
+  default = {
     "aws_one" = {
       id         = "i-1234567890"
       tags       = { "Name" = "aws_one", "foo" = "bar", "baz" = "bat" }
@@ -42,9 +47,11 @@ locals {
       private_ip = "127.0.0.1"
     }
   }
+}
 
-  # mock gcp instances
-  instances_gcp = {
+# mock gcp instances
+variable "instances_gcp" {
+  default = {
     "gcp_one" = {
       name              = "gcp_one"
       tags              = ["foo=bar", "othertag", "not-host-var"]
@@ -57,9 +64,11 @@ locals {
       network_interface = [{ network_ip = "127.0.0.1" }]
     }
   }
+}
 
-  # mock azure instances
-  instances_azr = {
+# mock azure instances
+variable "instances_azr" {
+  default = {
     "azr_one" = {
       id                 = "1234567890abcdefg"
       name               = "azr_one"
@@ -76,9 +85,11 @@ locals {
       source_image_reference = [{ offer = "WindowsServer" }]
     }
   }
+}
 
-  # mock vsphere instances
-  instances_vsp = {
+# mock vsphere instances
+variable "instances_vsp" {
+  default = {
     "vsp_one" = {
       name               = "vsp_one"
       default_ip_address = "127.0.0.1"
@@ -90,9 +101,11 @@ locals {
       clone              = [{ "customize" = [{ "windows_options" = [{ "full_name" = "not_administrator" }] }] }]
     }
   }
+}
 
-  # mock group vars
-  group_vars = {
+# mock group vars
+variable "group_vars" {
+  default = {
     "group_one" = { "ansible_connection" = "local", "custom" = true },
     "aws"       = { "ansible_connection" = "local" },
     "gcp"       = { "ansible_connection" = "local" },
@@ -100,9 +113,11 @@ locals {
     "vsp"       = { "ansible_connection" = "local" },
     "all"       = { "terraform" = 5 }
   }
+}
 
-  # mock extra provider instance hostvars
-  extra_hostvars = {
+# mock extra provider instance hostvars
+variable "extra_hostvars" {
+  default = {
     aws = { "aws_one" = { "extra" = "var" } }
     gcp = { "gcp_one" = { "extra" = "var" } }
     azr = { "azr_one" = { "extra" = "var" } }
