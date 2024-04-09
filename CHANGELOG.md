@@ -1,4 +1,4 @@
-### 1.3.1
+### 1.3.1 (Next)
 - Do not add empty platform groups to the inventory.
 
 ### 1.3.0

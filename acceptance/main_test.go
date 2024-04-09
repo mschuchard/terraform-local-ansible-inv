@@ -26,11 +26,19 @@ func TestTerraformLocalAnsibleInv(test *testing.T) {
 	defer terraform.Destroy(test, terraformOptions)
 
 	// invoke acceptance test execution
-	terraform.InitAndApply(test, terraformOptions)
+	if _, err := terraform.InitAndApplyAndIdempotentE(test, terraformOptions); err != nil {
+		test.Error("init, apply, or post-apply plan failed")
+		test.Error(err)
+		return
+	}
 
-	// validate files outputs
-	invFilesOutput := terraform.OutputList(test, terraformOptions, "inventory_files")
-	assert.Equal(test, []string{"./inventory.ini", "./inventory.json", "./inventory.yaml"}, invFilesOutput)
+	// validate "inv_files" output
+	if invFilesOutput, err := terraform.OutputListE(test, terraformOptions, "inventory_files"); err != nil {
+		test.Error("the 'inv_files' output could not be resolved correctly, and will not be validated")
+		test.Error(err)
+	} else {
+		assert.Equal(test, invFilesOutput, []string{"./inventory.ini", "./inventory.json", "./inventory.yaml"})
+	}
 
 	// validate inventory content outputs and then file content directly
 	for _, format := range []string{"ini", "yaml", "json"} {
@@ -42,11 +50,15 @@ func TestTerraformLocalAnsibleInv(test *testing.T) {
 			continue
 		}
 
-		// inventory outputs
-		output := terraform.Output(test, terraformOptions, "inventory_"+format)
-		assert.Equal(test, string(acceptance), output)
+		// inventory output's string content is equal to output file's content
+		if output, err := terraform.OutputE(test, terraformOptions, "inventory_"+format); err != nil {
+			test.Errorf("the Terraform output for the '%s' format could not be returned, and it will not be compated to the corresponding file content", format)
+			test.Error(err)
+		} else {
+			assert.Equal(test, output, string(acceptance))
+		}
 
-		// inventory file content
+		// inventory file content is equal to expected
 		inventoryFileContent, err := os.ReadFile(directory + "/inventory." + format)
 		if err != nil {
 			test.Errorf("issue with reading inventory file for %s format", format)
@@ -54,6 +66,6 @@ func TestTerraformLocalAnsibleInv(test *testing.T) {
 			continue
 		}
 
-		assert.Equal(test, string(acceptance), string(inventoryFileContent))
+		assert.Equal(test, string(inventoryFileContent), string(acceptance))
 	}
 }
