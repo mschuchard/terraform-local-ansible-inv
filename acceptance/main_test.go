@@ -43,7 +43,7 @@ func TestTerraformLocalAnsibleInv(test *testing.T) {
 	// validate inventory content outputs and then file content directly
 	for _, format := range []string{"ini", "yaml", "json"} {
 		// assign expected acceptance test inventory content from fixture
-		acceptance, err := os.ReadFile(directory + "/acceptance." + format)
+		acceptance, err := os.ReadFile(directory + "/fixtures/acceptance." + format)
 		if err != nil {
 			test.Errorf("issue with reading acceptance test fixture file for %s format", format)
 			test.Error(err)

@@ -22,7 +22,7 @@ resource "terraform_data" "inventory_validation" {
     json_inventory = module.ansible_inv.json
   }
 
-  provisioner "var-exec" {
+  provisioner "local-exec" {
     command = "ansible all -i inventory.${each.value} -m ping"
   }
 }
