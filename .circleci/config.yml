@@ -57,7 +57,7 @@ jobs:
     steps:
     - run:
         name: acceptance test terraform module
-        command: cd acceptance && terraform apply -input=false -no-color -auto-approve
+        command: cd acceptance && terraform apply -var-file=defaults.tfvars -input=false -no-color -auto-approve
 
 workflows:
   version: 2.1

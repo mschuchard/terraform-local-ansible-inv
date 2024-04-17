@@ -38,7 +38,7 @@ jobs:
     - name: verify proper formatting
       run: terraform fmt -diff -check -no-color
     - name: acceptance test terraform module
-      run: cd acceptance && terraform apply -input=false -no-color -auto-approve
+      run: cd acceptance && terraform apply -var-file=defaults.tfvars -input=false -no-color -auto-approve
     # TODO: deactivated temporarily because GH actions causing issue with JSON parsing in terratest go code
     #- name: acceptance test terraform module
     #  run: cd acceptance && go get -t github.com/mschuchard/terraform-local-ansible-inv && go test -v

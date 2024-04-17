@@ -19,8 +19,14 @@ func TestTerraformLocalAnsibleInv(test *testing.T) {
 	}
 	directory := filepath.Dir(file)
 
-	// construct tf options with path to acceptance test root module config dir
-	terraformOptions := terraform.WithDefaultRetryableErrors(test, &terraform.Options{TerraformDir: directory})
+	// construct tf options
+	terraformOptions := terraform.WithDefaultRetryableErrors(
+		test,
+		&terraform.Options{
+			TerraformDir: directory,
+			VarFiles:     []string{directory + "/defaults.tfvars"},
+		},
+	)
 
 	// defer destroy
 	defer terraform.Destroy(test, terraformOptions)
