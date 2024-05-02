@@ -4,10 +4,10 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"slices"
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestTerraformLocalAnsibleInv(test *testing.T) {
@@ -43,7 +43,11 @@ func TestTerraformLocalAnsibleInv(test *testing.T) {
 		test.Error("the 'inv_files' output could not be resolved correctly, and will not be validated")
 		test.Error(err)
 	} else {
-		assert.Equal(test, invFilesOutput, []string{"./inventory.ini", "./inventory.json", "./inventory.yaml"})
+		expectedOutput := []string{"./inventory.ini", "./inventory.json", "./inventory.yaml"}
+
+		if !slices.Equal(invFilesOutput, expectedOutput) {
+			test.Errorf("inv_files output expected value: %v, actual: %v", expectedOutput, invFilesOutput)
+		}
 	}
 
 	// validate inventory content outputs and then file content directly
@@ -55,13 +59,16 @@ func TestTerraformLocalAnsibleInv(test *testing.T) {
 			test.Error(err)
 			continue
 		}
+		acceptanceString := string(acceptance)
 
 		// inventory output's string content is equal to output file's content
 		if output, err := terraform.OutputE(test, terraformOptions, "inventory_"+format); err != nil {
-			test.Errorf("the Terraform output for the '%s' format could not be returned, and it will not be compated to the corresponding file content", format)
+			test.Errorf("the Terraform output for the '%s' format could not be returned, and it will not be compared to the corresponding file content", format)
 			test.Error(err)
 		} else {
-			assert.Equal(test, output, string(acceptance))
+			if acceptanceString != output {
+				test.Errorf("output for '%s' format expected value: %s, actual: %s", format, acceptanceString, output)
+			}
 		}
 
 		// inventory file content is equal to expected
@@ -71,7 +78,10 @@ func TestTerraformLocalAnsibleInv(test *testing.T) {
 			test.Error(err)
 			continue
 		}
+		invContentString := string(inventoryFileContent)
 
-		assert.Equal(test, string(inventoryFileContent), string(acceptance))
+		if acceptanceString != invContentString {
+			test.Errorf("file content for '%s' format expected value: %s, actual: %s", format, acceptanceString, invContentString)
+		}
 	}
 }
