@@ -1,4 +1,4 @@
-### 1.3.1 (Next)
+### 1.3.1
 - Do not add empty platform groups to the inventory.
 - Omit output for omitted formats instead of empty string value.
 

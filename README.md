@@ -9,7 +9,7 @@ Typically you would want to map the Terraform outputs and/or exported attributes
 # example declaration
 module "ansible_inv" {
   source  = "mschuchard/ansible-inv/local"
-  version = "~> 1.2.0"
+  version = "~> 1.3.0"
 
   formats   = ["yaml"]
   instances = {
