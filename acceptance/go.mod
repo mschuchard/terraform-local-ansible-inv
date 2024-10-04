@@ -1,8 +1,8 @@
 module github.com/mschuchard/terraform-local-ansible-inv
 
-go 1.21
+go 1.22
 
-require github.com/gruntwork-io/terratest v0.47.1
+require github.com/gruntwork-io/terratest v0.47.2
 
 require (
 	cloud.google.com/go v0.110.0 // indirect
