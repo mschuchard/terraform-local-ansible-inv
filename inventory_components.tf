@@ -118,15 +118,4 @@ locals {
       "vars" = try(var.group_vars["vsp"], {})
     }
   }
-
-  # all
-  # merge all groups
-  instances_groups = merge(
-    local.instances_var_groups,
-    # refrain from adding any empty platform groups, but note this also would need to be updated if a platform group children feature is added
-    length(local.instances_aws_groups["aws"]["hosts"]) > 0 ? local.instances_aws_groups : {},
-    length(local.instances_gcp_groups["gcp"]["hosts"]) > 0 ? local.instances_gcp_groups : {},
-    length(local.instances_azr_groups["azr"]["hosts"]) > 0 ? local.instances_azr_groups : {},
-    length(local.instances_vsp_groups["vsp"]["hosts"]) > 0 ? local.instances_vsp_groups : {}
-  )
 }
