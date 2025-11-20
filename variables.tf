@@ -41,7 +41,7 @@ variable "instances" {
       object({
         name = string
         ip   = string
-        vars = map(string)
+        vars = map(any)
       })
     )
   }))
