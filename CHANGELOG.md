@@ -1,6 +1,6 @@
 ### 1.3.2 (Next)
-- Reduce permissiveness of platform instance variables.
 - Increase permissiveness of direct instance host variables.
+- Improve `winrm` transport detection for AWS instances.
 
 ### 1.3.1
 - Do not add empty platform groups to the inventory.
