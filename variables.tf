@@ -14,6 +14,11 @@ variable "prefix" {
   type        = string
   default     = ""
   description = "A prefix to prepend to the name of the output inventory files. For example: the INI inventory will be named 'PREFIXinventory.ini'. This is primarily useful for unique naming schemes between module declarations."
+
+  validation {
+    condition     = !can(regex("\\.\\.", var.prefix))
+    error_message = "The prefix must not contain upward path traversal sequences."
+  }
 }
 
 variable "inv_file_perms" {
