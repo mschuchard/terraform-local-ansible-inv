@@ -7,7 +7,7 @@
 - Omit output for omitted formats instead of empty string value.
 
 ### 1.3.0
-- Increaase minimum TF version from 0.13 to 1.0.
+- Increase minimum TF version from 0.13 to 1.0.
 - Add `manage_file` variable.
 
 ### 1.2.1
