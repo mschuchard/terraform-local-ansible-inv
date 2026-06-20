@@ -1,4 +1,4 @@
-### 1.3.2 (Next)
+### 1.3.2
 - Increase permissiveness of direct instance host variables.
 - Improve `winrm` transport detection for AWS instances.
 - Strip trailing whitespace in INI format inventory host variables.
