@@ -82,7 +82,7 @@ locals {
   instances_azr_transform = {
     for instance in var.instances_azr : instance.name => merge(
       { "ansible_host" = instance.private_ip_address },
-      { "ansible_become_user" = try(one(instance.admin_ssh_key).username, instance.admin_username),
+      { "ansible_become_user" = try(one(instance.admin_ssh_key).username, instance.admin_username) },
       try(instance.tags, {}),
       can(regex("Windows", instance.source_image_reference.0.offer)) ? { "ansible_transport" = "winrm" } : {},
       try(var.extra_hostvars.azr[instance.name], {})

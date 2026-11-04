@@ -52,6 +52,12 @@ variable "instances" {
   }))
   default     = {}
   description = "The instances and their attributes used to populate the Ansible inventory file. The map keys will be used to construct Ansible inventory groups with the paired 'hosts' object values as the group host members."
+
+  validation {
+    # every child group must also be declared as its own key in the instances map
+    condition     = length([for child in flatten([for attrs in var.instances : tolist(attrs.children)]) : child if !contains(keys(var.instances), child)]) == 0
+    error_message = "Each group listed in a 'children' set must also be declared as a key in the instances map."
+  }
 }
 
 variable "instances_aws" {
