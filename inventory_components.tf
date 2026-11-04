@@ -105,7 +105,7 @@ locals {
       { "ansible_host" = instance.default_ip_address },
       try({ "ansible_become_user" = instance.clone.0.customize.0.windows_options.0.full_name }, {}),
       try(instance.vapp[0].properties, {}),
-      can(instance.clone.0.customize.0.windows_options) ? { "ansible_transport" = "winrm" } : {},
+      length(try(instance.clone.0.customize.0.windows_options, [])) > 0 ? { "ansible_transport" = "winrm" } : {},
       try(var.extra_hostvars.vsp[instance.name], {})
     )
   }

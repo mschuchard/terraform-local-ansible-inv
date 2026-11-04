@@ -1,3 +1,6 @@
+### 1.3.3 (Next)
+- Fix check for Windows transport in VSphere instances.
+
 ### 1.3.2
 - Increase permissiveness of direct instance host variables.
 - Improve `winrm` transport detection for AWS instances.
