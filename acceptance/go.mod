@@ -1,8 +1,8 @@
 module github.com/mschuchard/terraform-local-ansible-inv
 
-go 1.25
+go 1.26
 
-require github.com/gruntwork-io/terratest v0.55.0
+require github.com/gruntwork-io/terratest v0.56.0
 
 require (
 	github.com/agext/levenshtein v1.2.3 // indirect

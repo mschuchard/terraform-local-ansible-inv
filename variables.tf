@@ -27,7 +27,7 @@ variable "inv_file_perms" {
   description = "The file permissions octal mode for the output Ansible inventory file(s)."
 
   validation {
-    condition     = can(regex("^\\d{4}$", var.inv_file_perms))
+    condition     = can(regex("^[0-7]{4}$", var.inv_file_perms))
     error_message = "The permissions mode must be in four digit octal notation."
   }
 }

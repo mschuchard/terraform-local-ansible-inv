@@ -2,6 +2,7 @@
 - Fix check for Windows transport in VSphere instances.
 - Fix `ansible_become_user` auto-populate for Azure instances.
 - Validate child groups in `instances` variable are also declared as keys in the `instances` map.
+- Improve inventory file permissions validation.
 
 ### 1.3.2
 - Increase permissiveness of direct instance host variables.
