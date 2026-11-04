@@ -1,5 +1,6 @@
 ### 1.3.3 (Next)
 - Fix check for Windows transport in VSphere instances.
+- Fix `ansible_become_user` auto-populate for Azure instances.
 
 ### 1.3.2
 - Increase permissiveness of direct instance host variables.
