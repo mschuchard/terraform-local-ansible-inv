@@ -105,7 +105,7 @@ In this situation the `ansible_host` will be set to the instance private IP addr
 
 ### GCP
 
-The `ansible_host` will be set to the instance private IP address as determined by the `network_config` attribute. The host entry key will be set to the `name` argument.
+The `ansible_host` will be set to the instance private IP address as determined by the `network_interface` attribute. The host entry key will be set to the `name` argument.
 
 The tags will propagate as key value pairs for the host variables. This is determined by the existence of exactly two groups of characters in each tag that match the pattern `[-\w]+`. If these exist in the tag, then it will be converted to a host variable key value pair. Otherwise, the tag will be ignored. Example of converted tags include:
 

@@ -51,7 +51,7 @@ variable "instances" {
     )
   }))
   default     = {}
-  description = "The instances and their attributes used to populate the Ansible inventory file. The map keys will be used to construct Ansible inventory groups with the paired 'hosts' object values as the group host members."
+  description = "The instances and their attributes used to populate the Ansible inventory file. The map keys will be used to construct Ansible inventory groups with the paired 'hosts' object values as the group host members. Note that the INI format inventory does not support nested groups, and such a situation would cause a Terraform parsing error."
 
   validation {
     # every child group must also be declared as its own key in the instances map

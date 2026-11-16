@@ -4,12 +4,13 @@
 - Validate child groups in `instances` variable are also declared as keys in the `instances` map.
 - Improve inventory file permissions validation.
 - Fix whitespace issues for variable values in INI format inventory.
+- Fix repeated tag keys for GCP instances.
 
 ### 1.3.2
 - Increase permissiveness of direct instance host variables.
 - Improve `winrm` transport detection for AWS instances.
 - Strip trailing whitespace in INI format inventory host variables.
-- Block upward path traversal sequences in `path` variable value.
+- Block upward path traversal sequences in `prefix` variable value.
 
 ### 1.3.1
 - Do not add empty platform groups to the inventory.

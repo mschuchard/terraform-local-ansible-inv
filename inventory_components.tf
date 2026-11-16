@@ -63,7 +63,7 @@ locals {
       { "ansible_host" = instance.network_interface.0.network_ip },
       try(instance.labels, {}),
       try(instance.metadata, {}),
-      { for tag in try(instance.tags, {}) : regexall("[-\\w]+", tag)[0] => regexall("[-\\w]+", tag)[1] if length(regexall("[-\\w]+", tag)) == 2 },
+      { for tag_key, tag_values in { for tag in try(instance.tags, {}) : regexall("[-\\w]+", tag)[0] => regexall("[-\\w]+", tag)[1]... if length(regexall("[-\\w]+", tag)) == 2 } : tag_key => tag_values[length(tag_values) - 1] },
       try(var.extra_hostvars.gcp[instance.name], {})
     )
   }
